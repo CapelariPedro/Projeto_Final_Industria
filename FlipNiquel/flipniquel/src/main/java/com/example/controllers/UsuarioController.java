@@ -65,7 +65,7 @@ public class UsuarioController {
                     mostrarAlerta(Alert.AlertType.INFORMATION, "Login bem-sucedido", "Bem-vindo, " + usuario + "!");
 
                     //Encaminha para a tela de RH
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/funci.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rh.fxml"));
                     Parent root = loader.load();
                     Stage stage = (Stage) txtUsuario.getScene().getWindow();
                     stage.setTitle("Flip Niquel");
