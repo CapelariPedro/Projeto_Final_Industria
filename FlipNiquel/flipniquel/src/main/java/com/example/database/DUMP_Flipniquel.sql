@@ -356,6 +356,10 @@ CREATE TABLE producao (
     quantidade INT NOT NULL,
     data_producao DATETIME DEFAULT CURRENT_TIMESTAMP,
 );
+INSERT INTO producao (id, funcionario, maquina, produto, quantidade, data_producao) VALUES
+(1, 'Fernanda Costa', 'Soldadora MIG 220V', 'Moinho de Martelo Turbo', 20, '2025-05-07 09:27:29'),
+(3, 'João Silva', 'Soldadora MIG 220V', 'Prensa Hidráulica Model 100', 20, '2025-05-07 09:45:42'),
+(4, 'João Silva', 'Bancada de Montagem com Ferramentas', 'Serra de Fita Industrial X200', 80, '2025-05-07 10:05:12');
 
 CREATE TABLE usuarioEstoque(
     id SERIAL PRIMARY KEY NOT NULL,
