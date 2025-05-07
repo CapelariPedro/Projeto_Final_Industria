@@ -51,7 +51,7 @@ public class ProducaoController {
     @FXML
     public void initialize() {
         configurarColunas();
-        configurarComboBoxEditaveis(); // Novo método para autocomplete
+        configurarComboBoxEditaveis(); 
         carregarFuncionarios();
         carregarMaquinas();
         carregarProdutos();
@@ -60,9 +60,9 @@ public class ProducaoController {
 
     private void configurarColunas() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colFuncionario.setCellValueFactory(new PropertyValueFactory<>("nomeFuncionario"));
-        colMaquina.setCellValueFactory(new PropertyValueFactory<>("nomeMaquina"));
-        colProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
+        colFuncionario.setCellValueFactory(new PropertyValueFactory<>("Funcionario"));
+        colMaquina.setCellValueFactory(new PropertyValueFactory<>("Maquina"));
+        colProduto.setCellValueFactory(new PropertyValueFactory<>("Produto"));
         colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         colDataProducao.setCellValueFactory(new PropertyValueFactory<>("dataProducao"));
     }
@@ -125,13 +125,13 @@ public class ProducaoController {
         listaMaquinas.clear();
         try (Connection conn = Database.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM maquina")) {
+             ResultSet rs = stmt.executeQuery("SELECT * FROM equipamentos")) {
             while (rs.next()) {
                 listaMaquinas.add(new Maquina(
                     rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getString("setor"),
-                    rs.getString("descricao")
+                    rs.getString("categoria")
                 ));
             }
             cmbMaquina.setItems(listaMaquinas);
@@ -150,7 +150,6 @@ public class ProducaoController {
                 listaProdutos.add(new Produto(
                     rs.getInt("id"),
                     rs.getString("nome"),
-                    rs.getDouble("preco"),
                     rs.getString("lote"),
                     rs.getString("sku")
                 ));
@@ -162,66 +161,60 @@ public class ProducaoController {
         }
     }
 
-    @FXML
-    public void registrarProducao() {
-        Funcionario funcionario = cmbFuncionario.getValue();
-        Maquina maquina = cmbMaquina.getValue();
-        Produto produto = cmbProduto.getValue();
-        String quantidadeTexto = txtQuantidade.getText().trim();
-
-        if (funcionario == null || maquina == null || produto == null || quantidadeTexto.isEmpty()) {
-            AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos obrigatórios.");
-            return;
-        }
-
-        try {
-            int quantidade = Integer.parseInt(quantidadeTexto);
-
-            try (Connection conn = Database.getConnection()) {
-                String sql;
-                PreparedStatement stmt;
-
-                if (emEdicao && producaoEmEdicao != null) {
-                    sql = "UPDATE producao SET funcionario_id = ?, maquina_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
-                    stmt = conn.prepareStatement(sql);
-                    stmt.setInt(1, funcionario.getId());
-                    stmt.setInt(2, maquina.getId());
-                    stmt.setInt(3, produto.getId());
-                    stmt.setInt(4, quantidade);
-                    stmt.setInt(5, producaoEmEdicao.getId());
-
-                    int linhasAfetadas = stmt.executeUpdate();
-                    if (linhasAfetadas > 0) {
-                        AlertUtils.showAlert(AlertType.SUCESSO, "Produção Atualizada", "Produção atualizada com sucesso!");
-                    }
-                } else {
-                    sql = "INSERT INTO producao (funcionario_id, maquina_id, produto_id, quantidade, data_producao) VALUES (?, ?, ?, ?, ?)";
-                    stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                    stmt.setInt(1, funcionario.getId());
-                    stmt.setInt(2, maquina.getId());
-                    stmt.setInt(3, produto.getId());
-                    stmt.setInt(4, quantidade);
-                    stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-
-                    int linhasAfetadas = stmt.executeUpdate();
-                    if (linhasAfetadas > 0) {
-                        AlertUtils.showAlert(AlertType.SUCESSO, "Produção Registrada", "Produção registrada com sucesso!");
-                    }
-                }
-
-                carregarProducoes();
-                limparCampos();
-                emEdicao = false;
-                producaoEmEdicao = null;
-
-            } catch (SQLException e) {
-                AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível registrar/atualizar a produção.");
-                AlertUtils.logError(e);
-            }
-        } catch (NumberFormatException e) {
-            AlertUtils.showAlert(AlertType.ERRO, "Quantidade Inválida", "Digite uma quantidade válida.");
-        }
+  @FXML
+public void registrarProducao() {
+    Funcionario funcionario = cmbFuncionario.getValue();
+    Maquina maquina = cmbMaquina.getValue();
+    Produto produto = cmbProduto.getValue();
+    String quantidadeTexto = txtQuantidade.getText().trim();
+    if (funcionario == null || maquina == null || produto == null || quantidadeTexto.isEmpty()) {
+        AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos obrigatórios.");
+        return;
     }
+    try {
+        int quantidade = Integer.parseInt(quantidadeTexto);
+        try (Connection conn = Database.getConnection()) {
+            String sql;
+            PreparedStatement stmt;
+            if (emEdicao && producaoEmEdicao != null) {
+                // Corrigido os nomes das colunas para corresponder ao formato usado no INSERT
+                sql = "UPDATE producao SET funcionario_id = ?, maquina_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, funcionario.getId());
+                stmt.setInt(2, maquina.getId());
+                stmt.setInt(3, produto.getId());
+                stmt.setInt(4, quantidade);
+                stmt.setInt(5, producaoEmEdicao.getId());
+                int linhasAfetadas = stmt.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    AlertUtils.showAlert(AlertType.SUCESSO, "Produção Atualizada", "Produção atualizada com sucesso!");
+                }
+            } else {
+                sql = "INSERT INTO producao (funcionario_id, maquina_id, produto_id, quantidade, data_producao) VALUES (?, ?, ?, ?, ?)";
+                stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stmt.setInt(1, funcionario.getId());
+                stmt.setInt(2, maquina.getId());
+                stmt.setInt(3, produto.getId());
+                stmt.setInt(4, quantidade);
+                stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+                int linhasAfetadas = stmt.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    AlertUtils.showAlert(AlertType.SUCESSO, "Produção Registrada", "Produção registrada com sucesso!");
+                }
+            }
+            carregarProducoes();
+            limparCampos();
+            emEdicao = false;
+            producaoEmEdicao = null;
+        } catch (SQLException e) {
+            AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível registrar/atualizar a produção.");
+            AlertUtils.logError(e);
+        }
+    } catch (NumberFormatException e) {
+        AlertUtils.showAlert(AlertType.ERRO, "Quantidade Inválida", "Digite uma quantidade válida.");
+    }
+}
+
 
     @FXML
     public void editarProducao() {
@@ -233,17 +226,17 @@ public class ProducaoController {
         }
 
         Funcionario funcionarioSelecionado = listaFuncionarios.stream()
-            .filter(f -> f.getId() == producaoSelecionada.getFuncionarioId())
+            .filter(f -> f.getSetor() == producaoSelecionada.getFuncionarioId())
             .findFirst()
             .orElse(null);
 
         Maquina maquinaSelecionada = listaMaquinas.stream()
-            .filter(m -> m.getId() == producaoSelecionada.getMaquinaId())
+            .filter(m -> m.getNome() == producaoSelecionada.getMaquinaId())
             .findFirst()
             .orElse(null);
 
         Produto produtoSelecionado = listaProdutos.stream()
-            .filter(p -> p.getId() == producaoSelecionada.getProdutoId())
+            .filter(p -> p.getNome() == producaoSelecionada.getProdutoId())
             .findFirst()
             .orElse(null);
 
@@ -314,15 +307,6 @@ public class ProducaoController {
              )) {
             while (rs.next()) {
                 listaProducao.add(new Producao(
-                    rs.getInt("id"),
-                    rs.getInt("funcionario_id"),
-                    rs.getInt("maquina_id"),
-                    rs.getInt("produto_id"),
-                    rs.getInt("quantidade"),
-                    rs.getTimestamp("data_producao").toLocalDateTime(),
-                    rs.getString("funcionario_nome"),
-                    rs.getString("maquina_nome"),
-                    rs.getString("produto_nome")
                 ));
             }
             tableProducao.setItems(listaProducao);
