@@ -7,17 +7,22 @@ public class Emprestimo {
     private int equipamentoId;
     private String equipamentoNome;
     private String setorSolicitante;
+    private String funcionarioCpf;
+    private String funcionarioNome;
     private Date dataInicio;
     private Date dataDevolucao;
     private String status;
     private String observacoes;
 
     public Emprestimo(int id, int equipamentoId, String equipamentoNome, String setorSolicitante,
-                      Date dataInicio, Date dataDevolucao, String status, String observacoes) {
+                      String funcionarioCpf, String funcionarioNome, Date dataInicio, 
+                      Date dataDevolucao, String status, String observacoes) {
         this.id = id;
         this.equipamentoId = equipamentoId;
         this.equipamentoNome = equipamentoNome;
         this.setorSolicitante = setorSolicitante;
+        this.funcionarioCpf = funcionarioCpf;
+        this.funcionarioNome = funcionarioNome;
         this.dataInicio = dataInicio;
         this.dataDevolucao = dataDevolucao;
         this.status = status;
@@ -54,6 +59,22 @@ public class Emprestimo {
 
     public void setSetorSolicitante(String setorSolicitante) {
         this.setorSolicitante = setorSolicitante;
+    }
+
+    public String getFuncionarioCpf() {
+        return funcionarioCpf;
+    }
+
+    public void setFuncionarioCpf(String funcionarioCpf) {
+        this.funcionarioCpf = funcionarioCpf;
+    }
+
+    public String getFuncionarioNome() {
+        return funcionarioNome;
+    }
+
+    public void setFuncionarioNome(String funcionarioNome) {
+        this.funcionarioNome = funcionarioNome;
     }
 
     public Date getDataInicio() {
@@ -102,6 +123,6 @@ public class Emprestimo {
 
     @Override
     public String toString() {
-        return equipamentoNome + " - " + setorSolicitante;
+        return equipamentoNome + " - " + funcionarioNome + " (" + setorSolicitante + ")";
     }
 }

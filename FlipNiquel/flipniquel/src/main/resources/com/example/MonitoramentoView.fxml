@@ -31,7 +31,7 @@
                         <Label text="Número de Série:" />
                         <TextField fx:id="txtNumeroSerie" promptText="Número de Série" />
                         <Label text="Setor:" />
-                        <TextField fx:id="txtSetor" promptText="Setor" />
+                        <ComboBox fx:id="cmbSetor" maxWidth="Infinity" promptText="Selecione o Setor" />
                         <Label text="Data de Aquisição:" />
                         <DatePicker fx:id="dtAquisicao" maxWidth="Infinity" promptText="dd/mm/aaaa" />
                         <Label text="Valor de Aquisição (R$):" />
@@ -131,7 +131,9 @@
                                 <Label text="Equipamento:" />
                                 <ComboBox fx:id="cmbEquipamentoEmprestimo" maxWidth="Infinity" promptText="Selecione o Equipamento" />
                                 <Label text="Setor Solicitante:" />
-                                <TextField fx:id="txtSetorSolicitante" promptText="Setor que solicitou o empréstimo" />
+                                <ComboBox fx:id="cmbSetorSolicitante" maxWidth="Infinity" promptText="Selecione o Setor" />
+                                <Label text="Funcionário:" />
+                                <ComboBox fx:id="cmbFuncionario" maxWidth="Infinity" promptText="Selecione o Funcionário" />
                             </VBox>
                             <VBox spacing="5" HBox.hgrow="ALWAYS">
                                 <Label text="Data de Início:" />
@@ -160,7 +162,8 @@
                             <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
                             <columns>
                                 <TableColumn fx:id="colEmprestimoEquipamento" text="Equipamento" />
-                                <TableColumn fx:id="colEmprestimoSetor" text="Setor Solicitante" />
+                                <TableColumn fx:id="colEmprestimoSetor" text="Setor" />
+                                <TableColumn fx:id="colEmprestimoFuncionario" text="Funcionário" />
                                 <TableColumn fx:id="colEmprestimoDataInicio" text="Data de Início" />
                                 <TableColumn fx:id="colEmprestimoDataDevolucao" text="Data de Devolução" />
                                 <TableColumn fx:id="colEmprestimoStatus" text="Status" />

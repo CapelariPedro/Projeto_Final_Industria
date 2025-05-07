@@ -3,6 +3,7 @@ package com.example.controllers;
 import com.example.database.Database;
 import com.example.models.Emprestimo;
 import com.example.models.Equipamento;
+import com.example.models.FuncionarioManutencao;
 import com.example.models.Manutencao;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -23,7 +24,6 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.control.TableRow;
 import javafx.util.Duration;
 
 import java.sql.*;
@@ -42,11 +42,11 @@ public class EquipamentoController {
     @FXML private ComboBox<String> cmbCategoria;
     @FXML private TextField txtModelo;
     @FXML private TextField txtNumeroSerie;
-    @FXML private TextField txtSetor;
+    @FXML private ComboBox<String> cmbSetor;
     @FXML private DatePicker dtAquisicao;
     @FXML private TextField txtValorAquisicao;
     @FXML private CheckBox chkManutencaoPeriodica;
-    
+
     // Campos da aba de manutenção
     @FXML private ComboBox<Equipamento> cmbEquipamentoManutencao;
     @FXML private ComboBox<String> cmbTipoManutencao;
@@ -60,21 +60,23 @@ public class EquipamentoController {
     @FXML private TableColumn<Manutencao, Date> colManutencaoDataConclusao;
     @FXML private TableColumn<Manutencao, String> colManutencaoStatus;
     @FXML private TableColumn<Manutencao, String> colManutencaoObservacoes;
-    
+
     // Campos da aba de empréstimo
     @FXML private ComboBox<Equipamento> cmbEquipamentoEmprestimo;
-    @FXML private TextField txtSetorSolicitante;
+    @FXML private ComboBox<String> cmbSetorSolicitante;
+    @FXML private ComboBox<FuncionarioManutencao> cmbFuncionario;
     @FXML private DatePicker dtInicioEmprestimo;
     @FXML private DatePicker dtDevolucaoEmprestimo;
     @FXML private TextArea txtObservacoesEmprestimo;
     @FXML private TableView<Emprestimo> tblEmprestimos;
     @FXML private TableColumn<Emprestimo, String> colEmprestimoEquipamento;
     @FXML private TableColumn<Emprestimo, String> colEmprestimoSetor;
+    @FXML private TableColumn<Emprestimo, String> colEmprestimoFuncionario;
     @FXML private TableColumn<Emprestimo, Date> colEmprestimoDataInicio;
     @FXML private TableColumn<Emprestimo, Date> colEmprestimoDataDevolucao;
     @FXML private TableColumn<Emprestimo, String> colEmprestimoStatus;
     @FXML private TableColumn<Emprestimo, String> colEmprestimoObservacoes;
-    
+   
     // Campos da aba de listagem
     @FXML private TableView<Equipamento> tblEquipamentos;
     @FXML private TableColumn<Equipamento, String> colCodigo;
@@ -136,6 +138,7 @@ public class EquipamentoController {
         // Configuração da tabela de empréstimos
         colEmprestimoEquipamento.setCellValueFactory(new PropertyValueFactory<>("equipamentoNome"));
         colEmprestimoSetor.setCellValueFactory(new PropertyValueFactory<>("setorSolicitante"));
+        colEmprestimoFuncionario.setCellValueFactory(new PropertyValueFactory<>("funcionarioNome"));
         colEmprestimoDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
         colEmprestimoDataDevolucao.setCellValueFactory(new PropertyValueFactory<>("dataDevolucao"));
         colEmprestimoStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -145,10 +148,24 @@ public class EquipamentoController {
         tblEquipamentos.setEditable(false);
 
         // Configuração dos comboboxes
-        cmbCategoria.getItems().addAll("Ferramentas Manuais", "Equipamentos Elétricos", "Equipamentos Mecânicos", "Máquinas Pesadas", "Outros");
+        cmbCategoria.getItems().addAll("Acabamento", "Eletrônica", "Ferramenta de Conformação", "Ferramenta de Corte","Ferramenta de Medição","Ferramenta Manual", "Furadeira","Instrumentação","Montagem","Pintura Industrial","Pneumático","Solda", "Outros");
         cmbFiltro.getItems().addAll("Código", "Nome", "Modelo", "Setor", "Categoria");
         cmbTipoManutencao.getItems().addAll("Conserto");
         
+        // Configurar lista de setores para ComboBox
+        cmbSetor.getItems().addAll("Acabamento", "Almoxarifado", "Automação", "Controle de Qualidade", 
+                                 "Financeiro", "Manutenção","Montagem","Pintura", "Produção", "RH");
+
+        // Agora carregue os setores do RH apenas para o combobox de empréstimos
+        carregarSetoresDoRH();
+
+        // Adicionar listener para quando o setor for selecionado
+        cmbSetorSolicitante.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                carregarFuncionariosPorSetor(newVal);
+            }
+        });
+
         // Configurar políticas de redimensionamento
         tblEquipamentos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tblManutencoes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -173,7 +190,7 @@ public class EquipamentoController {
                 onEquipamentoSelecionadoManutencao();
             }
         });
-        
+
         // Configurar estilo para destacar manutenções atrasadas
         tblManutencoes.setRowFactory(tv -> new TableRow<Manutencao>() {
             @Override
@@ -189,7 +206,7 @@ public class EquipamentoController {
                 }
             }
         });
-        
+
         // Configurar estilo para destacar empréstimos atrasados
         tblEmprestimos.setRowFactory(tv -> new TableRow<Emprestimo>() {
             @Override
@@ -205,7 +222,7 @@ public class EquipamentoController {
                 }
             }
         });
-        
+
         // Verificar atrasos ao inicializar
         verificarAtrasosManutencaoEEmprestimo();
         
@@ -216,7 +233,78 @@ public class EquipamentoController {
         verificadorAtrasos.setCycleCount(Timeline.INDEFINITE);
         verificadorAtrasos.play();
     }
-    
+
+    /**
+ * Carrega os setores/departamentos disponíveis no banco de RH
+ */
+    private void carregarSetoresDoRH() {
+        try (Connection conn = Database.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                "SELECT DISTINCT departamento FROM dadosprofissionais ORDER BY departamento")) {
+            
+            ObservableList<String> setores = FXCollections.observableArrayList();
+            while (rs.next()) {
+                setores.add(rs.getString("departamento"));
+            }
+            
+            // Alimentar o ComboBox de setores na aba de empréstimos
+            cmbSetorSolicitante.setItems(setores);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao carregar setores do RH: " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * Carrega os funcionários do departamento selecionado
+     * @param departamento O departamento selecionado
+     */
+    private void carregarFuncionariosPorSetor(String departamento) {
+        cmbFuncionario.getItems().clear();
+        
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(
+                 "SELECT dp.cpf, dp.nome_completo, dprof.departamento, dprof.cargo " +
+                 "FROM dadospessoais dp " +
+                 "JOIN dadosprofissionais dprof ON dp.cpf = dprof.dados_pessoais " +
+                 "WHERE dprof.departamento = ? " +
+                 "ORDER BY dp.nome_completo")) {
+            
+            stmt.setString(1, departamento);
+            ResultSet rs = stmt.executeQuery();
+            
+            ObservableList<FuncionarioManutencao> funcionarios = FXCollections.observableArrayList();
+            while (rs.next()) {
+                FuncionarioManutencao funcionario = new FuncionarioManutencao(
+                    rs.getString("cpf"),
+                    rs.getString("nome_completo"),
+                    rs.getString("departamento"),
+                    rs.getString("cargo")
+                );
+                funcionarios.add(funcionario);
+            }
+            
+            cmbFuncionario.setItems(funcionarios);
+            cmbFuncionario.setConverter(new StringConverter<FuncionarioManutencao>() {
+                @Override
+                public String toString(FuncionarioManutencao funcionario) {
+                    if (funcionario == null) return "";
+                    return funcionario.getNomeCompleto() + " - " + funcionario.getCargo();
+                }
+                
+                @Override
+                public FuncionarioManutencao fromString(String string) {
+                    return null; // Não necessário para este caso
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+            mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao carregar funcionários: " + e.getMessage());
+        }
+    }
+
     /**
      * Verifica e atualiza o status de manutenções e empréstimos em atraso no banco de dados
      */
@@ -248,7 +336,7 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Falha ao verificar atrasos: " + e.getMessage());
         }
     }
-    
+
     private void configurarDatePickers() {
         // Define um conversor mais robusto para datas no formato brasileiro
         StringConverter<LocalDate> dateConverter = new StringConverter<>() {
@@ -298,7 +386,7 @@ public class EquipamentoController {
                 return null;
             }
         };
-        
+
         // Aplicar o conversor a todos DatePickers
         dtAquisicao.setConverter(dateConverter);
         dtInicioManutencao.setConverter(dateConverter);
@@ -312,7 +400,7 @@ public class EquipamentoController {
         dtConclusaoManutencao.setPromptText("dd/mm/aaaa");
         dtInicioEmprestimo.setPromptText("dd/mm/aaaa");
         dtDevolucaoEmprestimo.setPromptText("dd/mm/aaaa");
-        
+
         // Adicionar listeners para formatação imediata após entrada manual
         dtAquisicao.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) { // quando perde o foco
@@ -378,7 +466,7 @@ public class EquipamentoController {
         String categoria = cmbCategoria.getValue();
         String modelo = txtModelo.getText();
         String numeroSerie = txtNumeroSerie.getText();
-        String setor = txtSetor.getText();
+        String setor = cmbSetor.getValue();
         LocalDate dataAquisicao = dtAquisicao.getValue();
         double valorAquisicao;
         try {
@@ -421,7 +509,7 @@ public class EquipamentoController {
         cmbCategoria.getSelectionModel().clearSelection();
         txtModelo.clear();
         txtNumeroSerie.clear();
-        txtSetor.clear();
+        cmbSetor.getSelectionModel().clearSelection();
         dtAquisicao.setValue(null);
         txtValorAquisicao.clear();
         chkManutencaoPeriodica.setSelected(false);
@@ -477,7 +565,7 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao carregar equipamentos disponíveis: " + e.getMessage());
         }
     }
-    
+
     private void carregarManutencoes() {
         // Verificar atrasos antes de carregar
         verificarAtrasosManutencaoEEmprestimo();
@@ -510,7 +598,7 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao carregar manutenções: " + e.getMessage());
         }
     }
-    
+
     @FXML
     public void onEquipamentoSelecionadoManutencao() {
         Equipamento equipSelecionado = cmbEquipamentoManutencao.getValue();
@@ -613,7 +701,7 @@ public class EquipamentoController {
             e.printStackTrace();
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao registrar manutenção: " + e.getMessage());
         }
-    }
+    } 
 
     @FXML
     public void liberarManutencao() {
@@ -716,6 +804,8 @@ public class EquipamentoController {
                     rs.getInt("equipamento_id"),
                     rs.getString("equipamento_nome"),
                     rs.getString("setor_solicitante"),
+                    rs.getString("funcionario_cpf"),
+                    rs.getString("funcionario_nome"),
                     rs.getDate("data_inicio"),
                     rs.getDate("data_devolucao"),
                     rs.getString("status"),
@@ -729,11 +819,12 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao carregar empréstimos: " + e.getMessage());
         }
     }
-    
+
     @FXML
     public void registrarEmprestimo() {
         Equipamento equipamentoSelecionado = cmbEquipamentoEmprestimo.getValue();
-        String setorSolicitante = txtSetorSolicitante.getText();
+        String setorSolicitante = cmbSetorSolicitante.getValue();
+        FuncionarioManutencao funcionarioSelecionado = cmbFuncionario.getValue();
         LocalDate dataInicio = dtInicioEmprestimo.getValue();
         LocalDate dataDevolucao = dtDevolucaoEmprestimo.getValue();
         String observacoes = txtObservacoesEmprestimo.getText();
@@ -745,7 +836,12 @@ public class EquipamentoController {
         }
         
         if (setorSolicitante == null || setorSolicitante.trim().isEmpty()) {
-            mostrarAlerta(AlertType.WARNING, "Aviso", "Por favor, informe o setor solicitante.");
+            mostrarAlerta(AlertType.WARNING, "Aviso", "Por favor, selecione o setor solicitante.");
+            return;
+        }
+        
+        if (funcionarioSelecionado == null) {
+            mostrarAlerta(AlertType.WARNING, "Aviso", "Por favor, selecione o funcionário.");
             return;
         }
         
@@ -789,14 +885,16 @@ public class EquipamentoController {
                 
                 // Registrar empréstimo
                 try (PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO emprestimos (equipamento_id, setor_solicitante, data_inicio, data_devolucao, status, observacoes) VALUES (?, ?, ?, ?, ?, ?)")) {
+                    "INSERT INTO emprestimos (equipamento_id, setor_solicitante, funcionario_cpf, funcionario_nome, data_inicio, data_devolucao, status, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
                     
                     stmt.setInt(1, equipamentoSelecionado.getId());
                     stmt.setString(2, setorSolicitante);
-                    stmt.setDate(3, java.sql.Date.valueOf(dataInicio));
-                    stmt.setDate(4, java.sql.Date.valueOf(dataDevolucao));
-                    stmt.setString(5, status);
-                    stmt.setString(6, observacoes);
+                    stmt.setString(3, funcionarioSelecionado.getCpf());
+                    stmt.setString(4, funcionarioSelecionado.getNomeCompleto());
+                    stmt.setDate(5, java.sql.Date.valueOf(dataInicio));
+                    stmt.setDate(6, java.sql.Date.valueOf(dataDevolucao));
+                    stmt.setString(7, status);
+                    stmt.setString(8, observacoes);
                     stmt.executeUpdate();
                 }
                 
@@ -822,7 +920,6 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao registrar empréstimo: " + e.getMessage());
         }
     }
-
     @FXML
     public void liberarEmprestimo() {
         Emprestimo emprestimoSelecionado = tblEmprestimos.getSelectionModel().getSelectedItem();
@@ -896,7 +993,8 @@ public class EquipamentoController {
 
     private void limparCamposEmprestimo() {
         cmbEquipamentoEmprestimo.setValue(null);
-        txtSetorSolicitante.clear();
+        cmbSetorSolicitante.setValue(null);
+        cmbFuncionario.setValue(null);
         dtInicioEmprestimo.setValue(null);
         dtDevolucaoEmprestimo.setValue(null);
         txtObservacoesEmprestimo.clear();
@@ -917,7 +1015,7 @@ public class EquipamentoController {
                  "        ORDER BY m.data_inicio DESC LIMIT 1" +
                  "    ) " +
                  "    WHEN e.status = 'emprestado' THEN (" +
-                 "        SELECT emp.observacoes FROM emprestimos emp " +
+                 "        SELECT CONCAT(emp.funcionario_nome, ' (', emp.setor_solicitante, ')') FROM emprestimos emp " +
                  "        WHERE emp.equipamento_id = e.id AND (emp.status = 'no prazo' OR emp.status = 'atrasado') " +
                  "        ORDER BY emp.data_inicio DESC LIMIT 1" +
                  "    ) " +
@@ -1077,13 +1175,17 @@ public class EquipamentoController {
         TextField txtEditCodigo = new TextField(equipamentoSelecionado.getCodigo());
         TextField txtEditNome = new TextField(equipamentoSelecionado.getNome());
         ComboBox<String> cmbEditCategoria = new ComboBox<>();
-        cmbEditCategoria.getItems().addAll("Ferramentas Manuais", "Equipamentos Elétricos", "Equipamentos Mecânicos", "Máquinas Pesadas", "Outros");
+        cmbEditCategoria.getItems().addAll("Acabamento", "Eletrônica", "Ferramenta de Conformação", "Ferramenta de Corte","Ferramenta de Medição","Ferramenta Manual", "Furadeira","Instrumentação","Montagem","Pintura Industrial","Pneumático","Solda", "Outros");
         cmbEditCategoria.setValue(equipamentoSelecionado.getCategoria());
         TextField txtEditModelo = new TextField(equipamentoSelecionado.getModelo());
         TextField txtEditNumeroSerie = new TextField(equipamentoSelecionado.getNumeroSerie());
-        TextField txtEditSetor = new TextField(equipamentoSelecionado.getSetor());
+        ComboBox<String> cmbEditSetor = new ComboBox<>();
+        cmbEditSetor.getItems().addAll("Acabamento", "Almoxarifado", "Automação", "Controle de Qualidade", 
+                                  "Financeiro", "Manutenção", "Produção", "RH", "Pintura", 
+                                  "Montagem", "Teste", "Qualidade");
+        cmbEditSetor.setValue(equipamentoSelecionado.getSetor());
         DatePicker dtEditAquisicao = new DatePicker();
-        
+
         // CORREÇÃO: Converter java.util.Date para LocalDate de forma segura
         if (equipamentoSelecionado.getDataAquisicao() != null) {
             // Converter via Instant e ZoneId (funciona para java.util.Date)
@@ -1145,7 +1247,6 @@ public class EquipamentoController {
                 return null;
             }
         };
-        
         dtEditAquisicao.setConverter(dateConverter);
         dtEditAquisicao.setPromptText("dd/mm/aaaa");
         
@@ -1173,7 +1274,7 @@ public class EquipamentoController {
         grid.add(new Label("Número de Série:"), 0, 4);
         grid.add(txtEditNumeroSerie, 1, 4);
         grid.add(new Label("Setor:"), 0, 5);
-        grid.add(txtEditSetor, 1, 5);
+        grid.add(cmbEditSetor, 1, 5);
         grid.add(new Label("Data de Aquisição:"), 0, 6);
         grid.add(dtEditAquisicao, 1, 6);
         grid.add(new Label("Valor de Aquisição (R$):"), 0, 7);
@@ -1182,7 +1283,6 @@ public class EquipamentoController {
         grid.add(chkEditManutencaoPeriodica, 1, 8);
         
         dialog.getDialogPane().setContent(grid);
-        
         // Processar o resultado
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -1196,7 +1296,7 @@ public class EquipamentoController {
                 stmt.setString(3, cmbEditCategoria.getValue());
                 stmt.setString(4, txtEditModelo.getText());
                 stmt.setString(5, txtEditNumeroSerie.getText());
-                stmt.setString(6, txtEditSetor.getText());
+                stmt.setString(6, cmbEditSetor.getValue());
                 stmt.setDate(7, dtEditAquisicao.getValue() != null ? 
                              java.sql.Date.valueOf(dtEditAquisicao.getValue()) : null);
                 
@@ -1222,7 +1322,6 @@ public class EquipamentoController {
             }
         }
     }
-
     @FXML
     public void mostrarDetalhes() {
         Equipamento equipamentoSelecionado = tblEquipamentos.getSelectionModel().getSelectedItem();
@@ -1253,7 +1352,6 @@ public class EquipamentoController {
         alert.setContentText(detalhes.toString());
         alert.showAndWait();
     }
-
     @FXML
     public void gerarRelatorio() {
         try (Connection conn = Database.getConnection();
@@ -1303,7 +1401,6 @@ public class EquipamentoController {
                         relatorio.append("Manutenções Concluídas: ").append(concluidas).append("\n\n");
                     }
                 }
-                
                 // Adicionar informações de empréstimos
                 try (Statement stmtEmprestimo = conn.createStatement();
                      ResultSet rsEmprestimo = stmtEmprestimo.executeQuery(
@@ -1356,7 +1453,6 @@ public class EquipamentoController {
             mostrarAlerta(AlertType.ERROR, "Erro", "Erro ao gerar relatório: " + e.getMessage());
         }
     }
-    
     private void imprimirRelatorio(String conteudo) {
         PrinterJob job = PrinterJob.createPrinterJob();
         if (job == null) {
@@ -1389,7 +1485,6 @@ public class EquipamentoController {
             }
         }
     }
-
     private void mostrarAlerta(AlertType tipo, String titulo, String mensagem) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
@@ -1398,3 +1493,8 @@ public class EquipamentoController {
         alert.showAndWait();
     }
 }
+
+
+
+
+

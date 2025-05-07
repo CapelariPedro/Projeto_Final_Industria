@@ -338,9 +338,12 @@ CREATE TABLE usuarioMaquinario(
     senha VARCHAR(100) NOT NULL
 );
 
+INSERT INTO usuarioMaquinario(usuario, senha) VALUES ('fabiano ', '123');
+INSERT INTO usuarioMaquinario(usuario, senha) VALUES ('mauricio', '123');
 
 
--- Tabela de equipamentos
+
+-- Tabela de equipamentos com setor como ENUM para restrição
 CREATE TABLE equipamentos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(20) NOT NULL UNIQUE,
@@ -348,11 +351,12 @@ CREATE TABLE equipamentos (
     categoria VARCHAR(50),
     modelo VARCHAR(100),
     numero_serie VARCHAR(50),
-    setor VARCHAR(50),
+    setor ENUM('Acabamento','Almoxarifado', 'Automação', 'Controle de Qualidade', 'Financeiro', 'Manutenção', 'Produção', 'RH', 'Pintura', 'Montagem', 'Teste', 'Qualidade'),
     data_aquisicao DATE,
     valor_aquisicao DECIMAL(10,2),
     status VARCHAR(20) DEFAULT 'disponível',
-    manutencao_periodica BOOLEAN DEFAULT FALSE
+    manutencao_periodica BOOLEAN DEFAULT FALSE,
+    observacoes TEXT
 );
 
 -- Tabela de manutenções
@@ -367,11 +371,13 @@ CREATE TABLE manutencoes (
     FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
 );
 
--- Tabela de empréstimos
+-- Tabela de empréstimos modificada para incluir referência à pessoa
 CREATE TABLE emprestimos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     equipamento_id INT,
     setor_solicitante VARCHAR(50),
+    funcionario_cpf VARCHAR(15),
+    funcionario_nome VARCHAR(100),
     data_inicio DATE,
     data_devolucao DATE,
     status VARCHAR(20) DEFAULT 'no prazo',
@@ -530,3 +536,85 @@ INSERT INTO funcionario_setor (fk_funcionario, fk_setor) VALUES
 (10, 2),
 (11, 2),
 (12, 3);
+
+
+-- Caso o banco já exista, vamos usar o existente
+USE Industria_db;
+
+-- Tabela de equipamentos com setor como ENUM para restrição
+CREATE TABLE equipamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    nome VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50),
+    modelo VARCHAR(100),
+    numero_serie VARCHAR(50),
+    setor ENUM('Acabamento','Almoxarifado', 'Automação', 'Controle de Qualidade', 'Financeiro', 'Manutenção', 'Produção', 'RH', 'Pintura', 'Montagem', 'Teste', 'Qualidade'),
+    data_aquisicao DATE,
+    valor_aquisicao DECIMAL(10,2),
+    status VARCHAR(20) DEFAULT 'disponível',
+    manutencao_periodica BOOLEAN DEFAULT FALSE,
+    observacoes TEXT
+);
+
+-- Tabela de manutenções
+CREATE TABLE manutencoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipamento_id INT,
+    tipo_manutencao VARCHAR(50),
+    data_inicio DATE,
+    data_conclusao DATE,
+    status VARCHAR(20),
+    descricao_servico TEXT,
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+);
+
+-- Tabela de empréstimos modificada para incluir referência à pessoa
+CREATE TABLE emprestimos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipamento_id INT,
+    setor_solicitante VARCHAR(50),
+    funcionario_cpf VARCHAR(15),
+    funcionario_nome VARCHAR(100),
+    data_inicio DATE,
+    data_devolucao DATE,
+    status VARCHAR(20) DEFAULT 'no prazo',
+    observacoes TEXT,
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+);
+
+INSERT INTO equipamentos (
+    codigo, nome, categoria, modelo, numero_serie, setor, data_aquisicao, valor_aquisicao, status, manutencao_periodica
+) VALUES
+-- Corte e estrutura
+('EQP-M001', 'Serra de Corte Rápido', 'Ferramenta de Corte', 'SR-4500', 'SC-001-IND', 'Produção', '2024-03-15', 3500.00, 'disponível', TRUE),
+('EQP-M002', 'Dobradeira de Chapas Manual', 'Ferramenta de Conformação', 'DC-1000', 'DC-002-IND', 'Produção', '2024-06-10', 2800.00, 'disponível', TRUE),
+('EQP-M003', 'Soldadora MIG 220V', 'Solda', 'MIG220', 'SD-003-IND', 'Produção', '2024-11-01', 4200.00, 'disponível', TRUE),
+
+-- Pintura e acabamento
+('EQP-M004', 'Cabine de Pintura', 'Pintura Industrial', 'CB-500', 'PT-004-IND', 'Pintura', '2023-09-18', 7800.00, 'disponível', TRUE),
+('EQP-M005', 'Compressor de Ar 200L', 'Pneumático', 'CMP-200', 'AR-005-IND', 'Pintura', '2024-10-10', 3900.00, 'disponível', TRUE),
+
+-- Elétrica e eletrônica
+('EQP-M006', 'Estação de Solda Digital', 'Eletrônica', 'ESD-202', 'EL-006-IND', 'Montagem', '2025-01-22', 1100.00, 'disponível', TRUE),
+('EQP-M007', 'Fonte de Alimentação Ajustável', 'Eletrônica', 'FA-30V5A', 'FA-007-IND', 'Montagem', '2025-02-05', 750.00, 'disponível', FALSE),
+
+-- Montagem e testes
+('EQP-M008', 'Bancada de Montagem com Ferramentas', 'Montagem', 'BM-IND', 'BM-008-IND', 'Montagem', '2024-08-14', 2500.00, 'disponível', FALSE),
+('EQP-M009', 'Multímetro Digital True RMS', 'Instrumentação', 'MD-600', 'MT-009-IND', 'Qualidade', '2025-04-17', 450.00, 'disponível', FALSE),
+('EQP-M010', 'Osciloscópio de 2 Canais', 'Instrumentação', 'OSC-DS1102', 'OS-010-IND', 'Teste', '2024-05-30', 3200.00, 'disponível', FALSE);
+
+-- Ferramentas Elétricas Portáteis
+('EQP-F001', 'Furadeira de Bancada 13mm', 'Furadeira', 'FB-13', 'FD-001-PTL', 'Montagem', '2025-02-12', 850.00, 'disponível', TRUE),
+('EQP-F002', 'Parafusadeira Bateria 18V', 'Parafusadeira', 'PB-18', 'PS-002-PTL', 'Montagem', '2024-08-05', 680.00, 'disponível', FALSE),
+('EQP-F003', 'Retífica Elétrica', 'Acabamento', 'RE-100', 'RT-003-PTL', 'Acabamento', '2024-10-18', 430.00, 'disponível', FALSE),
+
+-- Ferramentas Manuais
+('EQP-F004', 'Chave de Fenda Conjunto 6 peças', 'Ferramenta Manual', 'CF-06', 'CF-004-MAN', 'Montagem', '2024-06-22', 120.00, 'disponível', FALSE),
+('EQP-F005', 'Chave Philips Conjunto 6 peças', 'Ferramenta Manual', 'CP-06', 'CP-005-MAN', 'Montagem', '2024-06-22', 130.00, 'disponível', FALSE),
+('EQP-F006', 'Martelo de Borracha 500g', 'Ferramenta Manual', 'MB-500', 'MT-006-MAN', 'Montagem', '2024-01-10', 60.00, 'disponível', FALSE),
+('EQP-F007', 'Alicate Universal 8"', 'Ferramenta Manual', 'AU-8', 'AL-007-MAN', 'Montagem', '2025-03-05', 55.00, 'disponível', FALSE),
+('EQP-F008', 'Alicate de Corte Diagonal', 'Ferramenta Manual', 'ACD-6', 'AC-008-MAN', 'Montagem', '2025-03-05', 58.00, 'disponível', FALSE),
+('EQP-F009', 'Trena 5 metros', 'Ferramenta de Medição', 'TR-5M', 'TR-009-MAN', 'Produção', '2024-12-01', 35.00, 'disponível', FALSE),
+('EQP-F010', 'Esquadro de Aço 12"', 'Ferramenta de Medição', 'ESQ-12', 'ES-010-MAN', 'Produção', '2024-12-01', 48.00, 'disponível', FALSE);
+
