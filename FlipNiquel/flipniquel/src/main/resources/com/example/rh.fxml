@@ -14,15 +14,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="950.0" maxWidth="1900.0" minHeight="700.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.DadoPessoalController">
+<VBox maxHeight="950.0" maxWidth="1900.0" minHeight="700.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controllers.RhController">
    <children>
-      <TabPane fx:id="tabPaneRh" prefHeight="900.0" prefWidth="900.0" tabClosingPolicy="ALL_TABS">
+      <TabPane fx:id="tabPaneRh" prefHeight="900.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Cadastro">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1920.0">
                      <children>
-                        <TabPane fx:id="tabPaneCadastro" prefHeight="772.0" prefWidth="1516.0" tabClosingPolicy="ALL_TABS">
+                        <TabPane fx:id="tabPaneCadastro" prefHeight="772.0" prefWidth="1516.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab fx:id="tabDadoPessoal" text="Dados pessoais">
                               <content>
