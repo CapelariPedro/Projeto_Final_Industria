@@ -131,11 +131,38 @@ CREATE TABLE usuarioProducao(
     usuario VARCHAR(100) NOT NULL,
     senha VARCHAR(100) NOT NULL
 );
+INSERT INTO usuarioProducao(usuario, senha) 
+VALUES
+('matheus', '010123'),
+('vitor', '010123')
+    
 CREATE TABLE funcionario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     setor VARCHAR(50) NOT NULL
 );
+INSERT INTO funcionario(nome, setor) 
+VALUES
+('Ana Souza', 'Produção'),
+('Carlos Lima', 'Manutenção'),
+('João Silva', 'Logística'),
+('Maria Oliveira', 'Administrativo'),
+('Fernanda Costa', 'Recursos Humanos'),
+('Pedro Santos', 'Produção'),
+('Lucas Pereira', 'Manutenção'),
+('Juliana Almeida', 'Logística'),
+('Roberta Martins', 'Administrativo'),
+('Gabriel Rocha', 'Recursos Humanos'),
+('Patrícia Ferreira', 'Produção'),
+('Daniel Souza', 'Manutenção'),
+('Fernanda Lima', 'Logística'),
+('Rafael Oliveira', 'Administrativo'),
+('Tatiane Costa', 'Recursos Humanos'),
+('Renato Martins', 'Produção'),
+('Carla Pereira', 'Manutenção'),
+('Vinícius Santos', 'Logística'),
+('Letícia Almeida', 'Administrativo'),
+('Marcelo Rocha', 'Recursos Humanos'),
 
 CREATE TABLE setores (
     id_setores int auto_increment primary key,
@@ -196,18 +223,39 @@ foreign key (fk_setor) references setores(id_setores));
 CREATE TABLE produto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    preco DECIMAL(10,2) NOT NULL
+    lote VARCHAR(100) NOT NULL,
+    sku VARCHAR(100) NOT NULL
 );
+INSERT INTO produto(nome, lote, sku)
+VALUES
+('Fresadora CNC 5000', 'Lote001', 'SKU001'),
+('Torno Mecânico Precision 3000', 'Lote002', 'SKU002'),
+('Prensa Hidráulica Model 100', 'Lote003', 'SKU003'),
+('Serra de Fita Industrial X200', 'Lote004', 'SKU004'),
+('Moinho de Martelo Turbo', 'Lote005', 'SKU005'),
+('Compressor de Ar Industrial 150', 'Lote006', 'SKU006'),
+('Soldadora MIG 250', 'Lote007', 'SKU007'),
+('Bomba Centrífuga HeavyDuty', 'Lote008', 'SKU008'),
+('Escavadeira Hidráulica ProMax 400', 'Lote009', 'SKU009'),
+('Elevador de Carga ElectroLift', 'Lote010', 'SKU010'),
+('Injetora de Plástico Mod. 500', 'Lote011', 'SKU011'),
+('Cortadora Laser ProCut 200', 'Lote012', 'SKU012'),
+('Máquina de Corte a Plasma Xtreme', 'Lote013', 'SKU013'),
+('Furadeira Radial HeavyPro', 'Lote014', 'SKU014'),
+('Prensa Pneumática SpeedPress', 'Lote015', 'SKU015'),
+('Máquina de Solda TIG Master 200', 'Lote016', 'SKU016'),
+('Misturador de Ração AgroMix', 'Lote017', 'SKU017'),
+('Linha de Produção Modular MegaLine', 'Lote018', 'SKU018'),
+('Despolpadora Industrial FruitPro', 'Lote019', 'SKU019'),
+('Extrusora de Alumínio UltraPress', 'Lote020', 'SKU020'),
 
 CREATE TABLE producao (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    funcionario_id INT,
-    maquina_id INT,
-    produto_id INT,
+    funcionario VARCHAR(100),
+    maquina VARCHAR(100),
+    produto VARCHAR(100),
     quantidade INT NOT NULL,
     data_producao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id),
-    FOREIGN KEY (produto_id) REFERENCES produto(id)
 );
 
 CREATE TABLE usuarioEstoque(
@@ -640,7 +688,7 @@ INSERT INTO equipamentos (
 -- Montagem e testes
 ('EQP-M008', 'Bancada de Montagem com Ferramentas', 'Montagem', 'BM-IND', 'BM-008-IND', 'Montagem', '2024-08-14', 2500.00, 'disponível', FALSE),
 ('EQP-M009', 'Multímetro Digital True RMS', 'Instrumentação', 'MD-600', 'MT-009-IND', 'Qualidade', '2025-04-17', 450.00, 'disponível', FALSE),
-('EQP-M010', 'Osciloscópio de 2 Canais', 'Instrumentação', 'OSC-DS1102', 'OS-010-IND', 'Teste', '2024-05-30', 3200.00, 'disponível', FALSE);
+('EQP-M010', 'Osciloscópio de 2 Canais', 'Instrumentação', 'OSC-DS1102', 'OS-010-IND', 'Teste', '2024-05-30', 3200.00, 'disponível', FALSE),
 
 -- Ferramentas Elétricas Portáteis
 ('EQP-F001', 'Furadeira de Bancada 13mm', 'Furadeira', 'FB-13', 'FD-001-PTL', 'Montagem', '2025-02-12', 850.00, 'disponível', TRUE),
