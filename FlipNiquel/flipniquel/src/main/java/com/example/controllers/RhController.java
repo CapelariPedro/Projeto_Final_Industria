@@ -930,23 +930,30 @@ public void excluirAtualizar() {
         return; // Importante sair da função se nada estiver selecionado
     }
 
-    if (excluirCpf  != null && !excluirCpf .isEmpty()) {
+    if (excluirCpf != null && !excluirCpf.isEmpty()) {
         try (Connection conn = Database.getConnection();
              PreparedStatement stmt = conn.prepareStatement("DELETE FROM dadosprofissionais WHERE dados_pessoais = ?");
-             PreparedStatement stmt1= conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?")) {
-
-            stmt.setString(1, excluirCpf );
-            stmt1.setString(1, excluirCpf );
-
-            carregarDadoPessoal();
-            carregarDadoProfissional();
-            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário excluído com sucesso!");
-
+             PreparedStatement stmt1 = conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?")) {
+    
+            stmt.setString(1, excluirCpf);
+            int profissionalExcluido = stmt.executeUpdate(); // stmt declarado como um int novo para ser puxado embaixo e carregar as funcoes
+    
+            stmt1.setString(1, excluirCpf);
+            int pessoalExcluido = stmt1.executeUpdate();
+    
+            if (profissionalExcluido > 0 && pessoalExcluido > 0) { // volta dos stmts executados declarados
+                limparCamposAtualizacao();
+                carregarDadoPessoal();
+                carregarDadoProfissional();
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário excluído com sucesso!");
+            } else {
+                mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir funcionário: ");
+            }
+    
         } catch (SQLException e) {
-            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir funcionário: " + e.getMessage());
+            System.err.println("Erro ao excluir funcionário: " + e.getMessage());
         }
     }
-    limparCamposAtualizacao();
 }
 
     public String formatarCPF(String cpf) {
