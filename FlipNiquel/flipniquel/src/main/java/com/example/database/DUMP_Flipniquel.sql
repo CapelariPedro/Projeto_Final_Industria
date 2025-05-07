@@ -1,14 +1,14 @@
 CREATE DATABASE Industria_db;
 USE Industria_db;
 
-
 CREATE TABLE usuarioRH(
     id SERIAL PRIMARY KEY NOT NULL,
     usuario VARCHAR(100) NOT NULL,
     senha VARCHAR(100) NOT NULL
 );
 
-INSERT INTO usuarioRH(usuario, senha) VALUES ('julia', '123');
+INSERT INTO usuarioRH(usuario, senha) VALUES ('julia.rh', '2603');
+INSERT INTO usuarioRH(usuario, senha) VALUES ('fabiane.rh', '0728');
 
 CREATE TABLE `dadospessoais` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -71,51 +71,150 @@ DROP INDEX `pisPasep_UNIQUE` ,
 DROP INDEX `ctps_UNIQUE` ;
 
 -- Insert 1
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
-VALUES ('Mariana Silva Souza', '1995-07-22', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Londrina-PR',
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Mariana Silva Souza', '22-07-1995', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Londrina-PR',
 '98765432101', 'PR12345678', 'Rua das Flores, 150 - Londrina - PR', '(43) 99111-2222', 'mariana.silva@email.com', 'José Silva e Ana Souza', 'A+', '(43) 99333-4444');
 
 INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
-VALUES ('Técnico em Automação', 'Automação', 'Manutenção e programação de sistemas automatizados', 'CLP, Sensores, Atuadores', '2023-03-10', '4500.00', 'Banco Itaú - Ag. 0123 - CC 98765-4', 'Vale Transporte, Plano de Saúde', 'Técnico Completo', '1234567', '10987654321', 'CLT', '08:00 - 18:00', '', '', '98765432101');
+VALUES ('Técnico em Automação', 'Automação', 'Manutenção e programação de sistemas automatizados', 'Sensores, Atuadores', '10-03-2023', '4500.00', 'Banco Itaú - Ag. 0123 - CC 98765-4', 'Vale Transporte, Plano de Saúde', 'Técnico Completo', '1234567', '10987654321', 'CLT', '08:00 - 18:00', '', '', '98765432101');
 
 -- Insert 2
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
-VALUES ('Carlos Alberto Oliveira', '1988-11-05', 'Masculino', 'Casado(a)', 'Fernanda Pereira Oliveira', 'Lucas Oliveira', 'Brasil', 'Maringá-PR',
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Carlos Alberto Oliveira', '05-11-1988', 'Masculino', 'Casado(a)', 'Fernanda Pereira Oliveira', 'Lucas Oliveira', 'Brasil', 'Maringá-PR',
 '12345678902', 'PR87654321', 'Avenida Paraná, 300 - Maringá - PR', '(44) 99888-7777', 'carlos.alberto@email.com', 'Antônio Oliveira e Maria Oliveira', 'B-', '(44) 99666-5555');
 
 INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
-VALUES ('Auxiliar de Estoque', 'Estoque', 'Organização e controle de materiais', 'Empilhadeira manual, Computador', '2024-01-15', '2100.00', 'Banco do Brasil - Ag. 4567 - CC 12345-6', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '8765432', '21098765432', 'CLT', '07:00 - 17:00', '', '', '12345678902');
+VALUES ('Auxiliar de Estoque', 'Estoque', 'Organização e controle de materiais', 'Empilhadeira manual', '15-01-2024', '2100.00', 'Banco do Brasil - Ag. 4567 - CC 12345-6', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '8765432', '21098765432', 'CLT', '07:00 - 17:00', '', '', '12345678902');
 
 -- Insert 3
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
-VALUES ('Ana Paula Santos', '1992-04-18', 'Feminino', 'Divorciado(a)', NULL, 'Pedro Santos', 'Brasil', 'Curitiba-PR',
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Ana Paula Santos', '18-04-1992', 'Feminino', 'Divorciado(a)', NULL, 'Pedro Santos', 'Brasil', 'Curitiba-PR',
 '34567890103', 'PR23456789', 'Rua XV de Novembro, 800 - Curitiba - PR', '(41) 99777-6666', 'ana.paula@email.com', 'Ricardo Santos e Cláudia Santos', 'O+', '(41) 99555-4444');
 
 INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
-VALUES ('Analista Financeiro Júnior', 'Financeiro', 'Contas a pagar, contas a receber, fluxo de caixa', 'Computador, Planilhas eletrônicas', '2024-08-01', '3800.00', 'Caixa Econômica - Ag. 7890 - CC 65432-1', 'Vale Transporte, Plano de Saúde', 'Graduação Completa (Bacharelado)', '3456789', '32109876543', 'CLT', '08:00 - 18:00', '', '', '34567890103');
+VALUES ('Analista Financeiro Júnior', 'Financeiro', 'Contas a pagar, contas a receber, fluxo de caixa', 'Planilhas eletrônicas', '01-08-2024', '3800.00', 'Caixa Econômica - Ag. 7890 - CC 65432-1', 'Vale Transporte, Plano de Saúde', 'Graduação Completa (Bacharelado)', '3456789', '32109876543', 'CLT', '08:00 - 18:00', '', '', '34567890103');
 
 -- Insert 4
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
-VALUES ('João Pedro Almeida', '1999-12-10', 'Masculino', 'Solteiro(a)', NULL, NULL, 'Argentina', 'Buenos Aires',
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('João Pedro Almeida', '10-12-1999', 'Masculino', 'Solteiro(a)', NULL, NULL, 'Argentina', 'Buenos Aires',
 '45678901204', 'AR98765432', 'Avenida San Martín, 123 - Buenos Aires', '+54 11 1234-5678', 'joao.almeida@email.com', 'Pablo Almeida e Sofia Gomez', 'AB-', '+54 11 9876-5432');
 
 INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
-VALUES ('Auxiliar de Manutenção', 'Manutenção', 'Suporte na manutenção preventiva e corretiva', 'Ferramentas manuais, Computador', '2025-05-01', '1900.00', 'Banco Santander - Ag. 1122 - CC 34567-8', 'Vale Transporte', 'Médio Incompleto', '4567890', '43210987654', 'Temporário', '08:00 - 17:00', '', '', '45678901204');
+VALUES ('Auxiliar de Manutenção', 'Manutenção', 'Suporte na manutenção preventiva e corretiva', 'Ferramentas manuais', '01-05-2025', '1900.00', 'Banco Santander - Ag. 1122 - CC 34567-8', 'Vale Transporte', 'Médio Incompleto', '4567890', '43210987654', 'Temporário', '08:00 - 17:00', '', '', '45678901204');
 
 -- Insert 5
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
-VALUES ('Fernanda Oliveira Costa', '1985-06-01', 'Feminino', 'Casado(a)', 'Ricardo Costa', 'Mariana Costa', 'Brasil', 'Londrina-PR',
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Fernanda Oliveira Costa', '01-06-1985', 'Feminino', 'Casado(a)', 'Ricardo Costa', 'Mariana Costa', 'Brasil', 'Londrina-PR',
 '56789012305', 'PR34567890', 'Rua Espírito Santo, 400 - Londrina - PR', '(43) 99666-5555', 'fernanda.costa@email.com', 'Manuel Oliveira e Carmen Costa', 'O-', '(43) 99444-3333');
 
 INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
-VALUES ('Operador de Produção', 'Produção', 'Operação de máquinas na linha de produção', 'Esteira, Máquinas CNC', '2022-09-20', '2800.00', 'Banco Bradesco - Ag. 7890 - CC 98765-0', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '5678901', '54321098765', 'CLT', '14:00 - 22:00', '', '', '56789012305');
+VALUES ('Operador de Produção', 'Produção', 'Operação de máquinas na linha de produção', 'Esteira, Máquinas CNC', '20-09-2022', '2800.00', 'Banco Bradesco - Ag. 7890 - CC 98765-0', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '5678901', '54321098765', 'CLT', '14:00 - 22:00', '', '', '56789012305');
 
+-- Insert 6
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Eduardo Lima Pereira', '15-09-1990', 'Masculino', 'Casado(a)', 'Juliana Lima Pereira', 'Lucas Pereira', 'Brasil', 'São Paulo-SP',
+'67890123406', 'SP12345678', 'Rua das Palmeiras, 230 - São Paulo - SP', '(11) 98765-4321', 'eduardo.pereira@email.com', 'Carlos Pereira e Regina Lima', 'B+', '(11) 99876-5432');
 
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Engenheiro de Produção', 'Engenharia', 'Desenvolvimento de processos e melhoria contínua', 'Softwares CAD, Planilhas', '10-02-2022', '7200.00', 'Banco Inter - Ag. 0001 - CC 12345-9', 'Plano de Saúde, PLR', 'Pós-graduação', '6789012', '65432109876', 'CLT', '09:00 - 18:00', '', '', '67890123406');
+
+-- Insert 7
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Luciana Rocha Mendes', '30-03-1993', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Belo Horizonte-MG', '78901234507', 'MG87654321', 'Rua Ouro Preto, 456 - Belo Horizonte - MG', '(31) 91234-5678', 'luciana.mendes@email.com', 'Paulo Mendes e Teresa Rocha', 'AB+', '(31) 93456-7890');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Assistente Administrativo', 'Administrativo', 'Atendimento, organização de documentos', 'Computador, Impressora', '15-04-2023', '2900.00', 'Banco Original - Ag. 0023 - CC 99887-1', 'Vale Transporte, Auxílio Refeição', 'Superior Incompleto', '7890123', '76543210987', 'CLT', '08:00 - 17:00', '', '', '78901234507');
+
+-- Insert 8
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Rafael Teixeira Gomes', '12-07-1987', 'Masculino', 'Casado(a)', 'Marta Gomes', 'João Gomes', 'Brasil', 'Fortaleza-CE', '89012345608', 'CE76543210', 'Rua das Acácias, 102 - Fortaleza - CE', '(85) 99988-7766', 'rafael.gomes@email.com', 'João Gomes e Luciana Teixeira', 'A-', '(85) 98877-6655');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Supervisor de Logística', 'Logística', 'Supervisão de equipe e controle de estoque', 'Computador, Paleteira', '05-06-2021', '5200.00', 'Banco do Nordeste - Ag. 3321 - CC 54321-0', 'Vale Transporte, Plano Odontológico', 'Graduação Completa (Tecnólogo)', '8901234', '87654321098', 'CLT', '09:00 - 18:00', '', '', '89012345608');
+
+-- Insert 9
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Juliana Borges Silva', '23-08-1996', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Florianópolis-SC', '90123456709', 'SC45678901', 'Rua das Laranjeiras, 78 - Florianópolis - SC', '(48) 98899-1234', 'juliana.silva@email.com', 'João Silva e Maria Borges', 'B+', '(48) 98765-4321');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Técnico de Qualidade', 'Qualidade', 'Controle de qualidade e auditorias', 'Software ERP', '02-03-2024', '3700.00', 'Banco Safra - Ag. 4455 - CC 12398-7', 'Vale Transporte, Seguro de Vida', 'Técnico Completo', '9012345', '98765432109', 'CLT', '07:30 - 16:30', '', '', '90123456709');
+
+-- Insert 10
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Thiago Martins Costa', '07-05-1991', 'Masculino', 'Casado(a)', 'Patrícia Costa', 'Sofia Costa', 'Brasil', 'Salvador-BA', '01234567810', 'BA34567890', 'Avenida Atlântica, 300 - Salvador - BA', '(71) 99888-4455', 'thiago.costa@email.com', 'Carlos Costa e Marina Martins', 'O+', '(71) 99666-7788');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista de RH', 'Recursos Humanos', 'Recrutamento, seleção e treinamento', 'Computador', '01-12-2023', '4800.00', 'Banco Itaú - Ag. 5678 - CC 12345-6', 'Vale Transporte, Vale Refeição', 'Graduação Completa (Bacharelado)', '0123456', '12345678901', 'CLT', '08:30 - 17:30', '', '', '01234567810');
+
+-- Insert 11
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Beatriz Ramos Ferreira', '20-11-1994', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Natal-RN', '12345678911', 'RN12345678', 'Rua das Flores, 321 - Natal - RN', '(84) 98877-6655', 'beatriz.ferreira@email.com', 'Roberto Ferreira e Carla Ramos', 'A+', '(84) 98765-4433');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Auxiliar Administrativo', 'Administrativo', 'Organização de arquivos e apoio em tarefas de escritório', 'Computador, Scanner', '10-10-2022', '2600.00', 'Banco do Brasil - Ag. 1234 - CC 56789-0', 'Vale Transporte', 'Médio Completo', '1234567', '23456789012', 'CLT', '08:00 - 17:00', '', '', '12345678911');
+
+-- Insert 12
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Carlos Eduardo Nunes', '14-03-1989', 'Masculino', 'Casado(a)', 'Daniela Nunes', 'Gabriel Nunes', 'Brasil', 'Joinville-SC', '23456789012', 'SC65432109', 'Rua Blumenau, 789 - Joinville - SC', '(47) 99988-7766', 'carlos.nunes@email.com', 'Eduardo Nunes e Sandra Nunes', 'B-', '(47) 99887-6655');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Mecânico Industrial', 'Manutenção', 'Reparo e manutenção de máquinas industriais', 'Torno, Furadeira', '05-11-2021', '4300.00', 'Banco Itaú - Ag. 5678 - CC 45678-9', 'Vale Transporte, Vale Alimentação', 'Técnico Completo', '2345678', '34567890123', 'CLT', '07:00 - 16:00', '', '', '23456789012');
+
+-- Insert 13
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Vanessa Lima Souza', '08-01-1997', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Recife-PE', '34567890113', 'PE98765432', 'Rua Maracatu, 111 - Recife - PE', '(81) 99888-1122', 'vanessa.souza@email.com', 'Marcelo Souza e Luciana Lima', 'AB-', '(81) 99777-1133');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista de Logística', 'Logística', 'Controle de transporte e estoque', 'Computador, ERP', '20-01-2023', '4100.00', 'Banco Bradesco - Ag. 2345 - CC 23456-7', 'Plano de Saúde, Vale Transporte', 'Graduação Completa (Bacharelado)', '3456789', '45678901234', 'CLT', '08:00 - 17:00', '', '', '34567890113');
+
+-- Insert 14 - dadospessoais
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Pedro Henrique Silva', '25-06-1983', 'Masculino', 'Casado(a)', 'Juliana Silva', 'Laura Silva', 'Brasil', 'Campinas-SP', '45678901214', 'SP34567891', 'Rua das Camélias, 202 - Campinas - SP', '(19) 99977-2233', 'pedro.silva@email.com', 'Henrique Silva e Marta Silva', 'O-', '(19) 99888-3344');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Engenheiro de Segurança', 'Engenharia', 'Avaliação e prevenção de riscos', 'Software de segurança', '01-07-2020', '8500.00', 'Banco Santander - Ag. 6789 - CC 12340-9', 'Plano de Saúde, Vale Transporte', 'Superior Completo', '98765432101', '10987654321', 'CLT', '08:00 - 18:00', '', '', '45678901214');
+
+-- Insert 15
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Aline Pereira dos Santos', '15-09-1992', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Curitiba-PR', '56789012315', 'PR56789012', 'Avenida do Contorno, 456 - Curitiba - PR', '(41) 99876-5544', 'aline.santos@email.com', 'João Santos e Paula Pereira', 'O+', '(41) 98765-4433');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Coordenadora de Marketing', 'Marketing', 'Planejamento de campanhas e análise de mercado', 'Software de design', '01-08-2022', '6500.00', 'Banco Bradesco - Ag. 4321 - CC 87654-3', 'Vale Transporte, Auxílio Refeição', 'Graduação Completa', '5678901', '67890123456', 'CLT', '09:00 - 18:00', '', '', '56789012315');
+
+-- Insert 16
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Maurício Andrade Silva', '11-04-1984', 'Masculino', 'Casado(a)', 'Renata Silva', 'Lucas Silva', 'Brasil', 'Vitória-ES', '67890123416', 'ES67890123', 'Rua dos Coqueiros, 789 - Vitória - ES', '(27) 99887-6655', 'mauricio.silva@email.com', 'Carlos Silva e Maria Andrade', 'AB+', '(27) 98765-4321');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Gerente de TI', 'Tecnologia', 'Gestão de equipe de TI e implementação de sistemas', 'Servidores', '10-05-2020', '10500.00', 'Banco Santander - Ag. 1342 - CC 98765-4', 'Plano de Saúde, Auxílio Educação', 'Graduação Completa (TI)', '6789012', '78901234567', 'CLT', '08:30 - 17:30', '', '', '67890123416');
+
+-- Insert 17
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Sofia Almeida Martins', '28-06-1995', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Porto Alegre-RS', '78901234517', 'RS78901234', 'Rua do Sol, 123 - Porto Alegre - RS', '(51) 98765-4321', 'sofia.martins@email.com', 'Miguel Martins e Lucia Almeida', 'A-', '(51) 98877-6655');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista de Sistemas', 'TI', 'Desenvolvimento e suporte de sistemas internos', 'Servidores', '03-07-2021', '4300.00', 'Banco do Brasil - Ag. 2153 - CC 45678-9', 'Vale Transporte, Vale Alimentação', 'Graduação Completa (Sistemas de Informação)', '7890123', '89012345678', 'CLT', '09:00 - 18:00', '', '', '78901234517');
+
+-- Insert 18
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Gustavo Costa Oliveira', '22-02-1987', 'Masculino', 'Casado(a)', 'Patrícia Oliveira', 'Livia Oliveira', 'Brasil', 'Rio de Janeiro-RJ', '89012345618', 'RJ89012345', 'Rua do Catete, 234 - Rio de Janeiro - RJ', '(21) 99988-7766', 'gustavo.oliveira@email.com', 'José Oliveira e Marta Costa', 'B+', '(21) 99777-6655');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Consultor de Vendas', 'Vendas', 'Prospectar clientes e fechar contratos', 'Computador, CRM', '01-02-2021', '3800.00', 'Banco Caixa Econômica - Ag. 1020 - CC 12345-0', 'Vale Transporte, Comissões', 'Graduação Completa (Administração)', '8901234', '90123456789', 'CLT', '09:00 - 18:00', '', '', '89012345618');
+
+-- Insert 19
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Tatiane Lopes de Souza', '13-12-1990', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Aracaju-SE', '90123456720', 'SE90123456', 'Rua dos Lírios, 678 - Aracaju - SE', '(79) 99888-1122', 'tatiane.souza@email.com', 'José Souza e Ana Lopes', 'O-', '(79) 98765-4433');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Assistente de Recursos Humanos', 'Recursos Humanos', 'Apoio em recrutamento e organização de documentos', 'Impressora', '22-03-2023', '3100.00', 'Banco Santander - Ag. 1342 - CC 98765-5', 'Vale Transporte, Seguro de Vida', 'Ensino Superior Incompleto', '9012345', '01234567890', 'CLT', '08:00 - 17:00', '', '', '90123456720');
+
+-- Insert 20
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Felipe Silva Gomes', '07-10-1993', 'Masculino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Salvador-BA', '12345678921', 'BA12345678', 'Rua do Campo, 345 - Salvador - BA', '(71) 99876-3344', 'felipe.gomes@email.com', 'Roberto Gomes e Silvia Silva', 'A+', '(71) 98877-2244');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Engenheiro de Produção', 'Produção', 'Análise e controle de processos industriais', 'Computador', '15-05-2021', '8500.00', 'Banco do Brasil - Ag. 2345 - CC 65432-1', 'Plano de Saúde, Vale Alimentação', 'Graduação Completa (Engenharia)', '1234567', '23456789012', 'CLT', '08:00 - 17:00', '', '', '12345678921');
 
 
 CREATE TABLE usuarioFinanceiro(
