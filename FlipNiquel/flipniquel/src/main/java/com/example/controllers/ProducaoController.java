@@ -25,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 
 public class ProducaoController {
     @FXML private ComboBox<Funcionario> cmbFuncionario;
@@ -60,9 +61,9 @@ public class ProducaoController {
 
     private void configurarColunas() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colFuncionario.setCellValueFactory(new PropertyValueFactory<>("Funcionario"));
-        colMaquina.setCellValueFactory(new PropertyValueFactory<>("Maquina"));
-        colProduto.setCellValueFactory(new PropertyValueFactory<>("Produto"));
+        colFuncionario.setCellValueFactory(new PropertyValueFactory<>("nomeFuncionario"));
+        colMaquina.setCellValueFactory(new PropertyValueFactory<>("nomeMaquina"));
+        colProduto.setCellValueFactory(new PropertyValueFactory<>("nomeProduto"));
         colQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         colDataProducao.setCellValueFactory(new PropertyValueFactory<>("dataProducao"));
     }
@@ -115,17 +116,34 @@ public class ProducaoController {
                 ));
             }
             cmbFuncionario.setItems(listaFuncionarios);
+    
+            cmbFuncionario.setConverter(new StringConverter<Funcionario>() {
+                public String toString(Funcionario funcionario) {
+                    return funcionario != null ? funcionario.getNome() : "";
+                }
+    
+                public Funcionario fromString(String nomeDigitado) {
+                    for (Funcionario f : listaFuncionarios) {
+                        if (f.getNome().equalsIgnoreCase(nomeDigitado.trim())) {
+                            return f;
+                        }
+                    }
+                    return null; // se não encontrou
+                }
+            });
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar os funcionários.");
             AlertUtils.logError(e);
         }
     }
+    
 
     private void carregarMaquinas() {
         listaMaquinas.clear();
         try (Connection conn = Database.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM equipamentos")) {
+            
             while (rs.next()) {
                 listaMaquinas.add(new Maquina(
                     rs.getInt("id"),
@@ -134,18 +152,39 @@ public class ProducaoController {
                     rs.getString("categoria")
                 ));
             }
+    
             cmbMaquina.setItems(listaMaquinas);
+    
+            cmbMaquina.setConverter(new StringConverter<Maquina>() {
+                @Override
+                public String toString(Maquina maquina) {
+                    return maquina != null ? maquina.getNome() : "";
+                }
+    
+                @Override
+                public Maquina fromString(String nomeDigitado) {
+                    for (Maquina m : listaMaquinas) {
+                        if (m.getNome().equalsIgnoreCase(nomeDigitado.trim())) {
+                            return m;
+                        }
+                    }
+                    return null;
+                }
+            });
+    
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar as máquinas.");
             AlertUtils.logError(e);
         }
     }
+    
 
     private void carregarProdutos() {
         listaProdutos.clear();
         try (Connection conn = Database.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM produto")) {
+            
             while (rs.next()) {
                 listaProdutos.add(new Produto(
                     rs.getInt("id"),
@@ -154,66 +193,103 @@ public class ProducaoController {
                     rs.getString("sku")
                 ));
             }
+    
             cmbProduto.setItems(listaProdutos);
+    
+            cmbProduto.setConverter(new StringConverter<Produto>() {
+                @Override
+                public String toString(Produto produto) {
+                    return produto != null ? produto.getNome() : "";
+                }
+    
+                @Override
+                public Produto fromString(String nomeDigitado) {
+                    for (Produto p : listaProdutos) {
+                        if (p.getNome().equalsIgnoreCase(nomeDigitado.trim())) {
+                            return p;
+                        }
+                    }
+                    return null;
+                }
+            });
+    
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar os produtos.");
             AlertUtils.logError(e);
         }
     }
+    
 
-  @FXML
-public void registrarProducao() {
-    Funcionario funcionario = cmbFuncionario.getValue();
-    Maquina maquina = cmbMaquina.getValue();
-    Produto produto = cmbProduto.getValue();
-    String quantidadeTexto = txtQuantidade.getText().trim();
-    if (funcionario == null || maquina == null || produto == null || quantidadeTexto.isEmpty()) {
-        AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos obrigatórios.");
-        return;
-    }
-    try {
-        int quantidade = Integer.parseInt(quantidadeTexto);
-        try (Connection conn = Database.getConnection()) {
-            String sql;
-            PreparedStatement stmt;
-            if (emEdicao && producaoEmEdicao != null) {
-                // Corrigido os nomes das colunas para corresponder ao formato usado no INSERT
-                sql = "UPDATE producao SET funcionario_id = ?, maquina_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setInt(1, funcionario.getId());
-                stmt.setInt(2, maquina.getId());
-                stmt.setInt(3, produto.getId());
-                stmt.setInt(4, quantidade);
-                stmt.setInt(5, producaoEmEdicao.getId());
-                int linhasAfetadas = stmt.executeUpdate();
-                if (linhasAfetadas > 0) {
-                    AlertUtils.showAlert(AlertType.SUCESSO, "Produção Atualizada", "Produção atualizada com sucesso!");
-                }
-            } else {
-                sql = "INSERT INTO producao (funcionario_id, maquina_id, produto_id, quantidade, data_producao) VALUES (?, ?, ?, ?, ?)";
-                stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                stmt.setInt(1, funcionario.getId());
-                stmt.setInt(2, maquina.getId());
-                stmt.setInt(3, produto.getId());
-                stmt.setInt(4, quantidade);
-                stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-                int linhasAfetadas = stmt.executeUpdate();
-                if (linhasAfetadas > 0) {
-                    AlertUtils.showAlert(AlertType.SUCESSO, "Produção Registrada", "Produção registrada com sucesso!");
-                }
-            }
-            carregarProducoes();
-            limparCampos();
-            emEdicao = false;
-            producaoEmEdicao = null;
-        } catch (SQLException e) {
-            AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível registrar/atualizar a produção.");
-            AlertUtils.logError(e);
+    @FXML
+    public void registrarProducao() {
+        Funcionario funcionario = cmbFuncionario.getValue();
+        Maquina maquina = cmbMaquina.getValue();
+        Produto produto = cmbProduto.getValue();
+        String quantidadeTexto = txtQuantidade.getText().trim();
+    
+        // Validação dos campos
+        if (funcionario == null || maquina == null || produto == null || quantidadeTexto.isEmpty()) {
+            AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos obrigatórios.");
+            return;
         }
-    } catch (NumberFormatException e) {
-        AlertUtils.showAlert(AlertType.ERRO, "Quantidade Inválida", "Digite uma quantidade válida.");
+    
+        try {
+            int quantidade = Integer.parseInt(quantidadeTexto);
+    
+            try (Connection conn = Database.getConnection()) {
+                String sql;
+                PreparedStatement stmt;
+    
+                if (emEdicao && producaoEmEdicao != null) {
+                    // Atualizar produção existente
+                    sql = "UPDATE producao SET funcionario = ?, maquina = ?, produto = ?, quantidade = ? WHERE id = ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, funcionario.getNome());
+                    stmt.setString(2, maquina.getNome());
+                    stmt.setString(3, produto.getNome());
+                    stmt.setInt(4, quantidade);
+                    stmt.setInt(5, producaoEmEdicao.getId());
+    
+                    int linhasAfetadas = stmt.executeUpdate();
+                    if (linhasAfetadas > 0) {
+                        AlertUtils.showAlert(AlertType.SUCESSO, "Produção Atualizada", "Produção atualizada com sucesso!");
+                    } else {
+                        AlertUtils.showAlert(AlertType.AVISO, "Nenhuma Alteração", "Nenhuma linha foi alterada.");
+                    }
+    
+                } else {
+                    // Inserir nova produção
+                    sql = "INSERT INTO producao (funcionario, maquina, produto, quantidade, data_producao) VALUES (?, ?, ?, ?, ?)";
+                    stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    stmt.setString(1, funcionario.getNome());
+                    stmt.setString(2, maquina.getNome());
+                    stmt.setString(3, produto.getNome());
+                    stmt.setInt(4, quantidade);
+                    stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+    
+                    int linhasAfetadas = stmt.executeUpdate();
+                    if (linhasAfetadas > 0) {
+                        AlertUtils.showAlert(AlertType.SUCESSO, "Produção Registrada", "Produção registrada com sucesso!");
+                    } else {
+                        AlertUtils.showAlert(AlertType.AVISO, "Falha", "Nenhuma produção foi registrada.");
+                    }
+                }
+    
+                carregarProducoes();
+                limparCampos();
+                emEdicao = false;
+                producaoEmEdicao = null;
+    
+            } catch (SQLException e) {
+                AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível registrar ou atualizar a produção.");
+                AlertUtils.logError(e);
+            }
+    
+        } catch (NumberFormatException e) {
+            AlertUtils.showAlert(AlertType.ERRO, "Quantidade Inválida", "Digite uma quantidade válida (número inteiro).");
+        }
     }
-}
+    
 
 
     @FXML
@@ -226,19 +302,20 @@ public void registrarProducao() {
         }
 
         Funcionario funcionarioSelecionado = listaFuncionarios.stream()
-            .filter(f -> f.getSetor() == producaoSelecionada.getFuncionarioId())
-            .findFirst()
-            .orElse(null);
-
-        Maquina maquinaSelecionada = listaMaquinas.stream()
-            .filter(m -> m.getNome() == producaoSelecionada.getMaquinaId())
-            .findFirst()
-            .orElse(null);
-
-        Produto produtoSelecionado = listaProdutos.stream()
-            .filter(p -> p.getNome() == producaoSelecionada.getProdutoId())
-            .findFirst()
-            .orElse(null);
+        .filter(f -> f.getNome().equalsIgnoreCase(producaoSelecionada.getNomeFuncionario()))
+        .findFirst()
+        .orElse(null);
+    
+    Maquina maquinaSelecionada = listaMaquinas.stream()
+        .filter(m -> m.getNome().equalsIgnoreCase(producaoSelecionada.getNomeMaquina()))
+        .findFirst()
+        .orElse(null);
+    
+    Produto produtoSelecionado = listaProdutos.stream()
+        .filter(p -> p.getNome().equalsIgnoreCase(producaoSelecionada.getNomeProduto()))
+        .findFirst()
+        .orElse(null);
+    
 
         cmbFuncionario.setValue(funcionarioSelecionado);
         cmbMaquina.setValue(maquinaSelecionada);
@@ -296,24 +373,33 @@ public void registrarProducao() {
         try (Connection conn = Database.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(
-                 "SELECT p.*, " +
+                 "SELECT p.id, p.quantidade, p.data_producao, " +
                  "f.nome AS funcionario_nome, " +
                  "m.nome AS maquina_nome, " +
                  "pr.nome AS produto_nome " +
                  "FROM producao p " +
-                 "JOIN funcionario f ON p.funcionario_id = f.id " +
-                 "JOIN maquina m ON p.maquina_id = m.id " +
-                 "JOIN produto pr ON p.produto_id = pr.id"
+                 "JOIN funcionario f ON p.funcionario = f.nome " +
+                 "JOIN equipamentos m ON p.maquina = m.nome " +
+                 "JOIN produto pr ON p.produto = pr.nome"
+                 
              )) {
             while (rs.next()) {
                 listaProducao.add(new Producao(
+                    rs.getInt("id"),
+                    rs.getString("funcionario_nome"),
+                    rs.getString("maquina_nome"),
+                    rs.getString("produto_nome"),
+                    rs.getInt("quantidade"),
+                    rs.getTimestamp("data_producao").toLocalDateTime()
                 ));
             }
+            System.out.println("Total de produções carregadas: " + listaProducao.size());
             tableProducao.setItems(listaProducao);
         } catch (SQLException e) {
             AlertUtils.logError(e);
         }
     }
+    
 
     private void limparCampos() {
         cmbFuncionario.setValue(null);
