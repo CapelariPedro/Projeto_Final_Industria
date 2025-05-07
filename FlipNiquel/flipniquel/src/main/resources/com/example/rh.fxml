@@ -197,111 +197,111 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="679.0" prefWidth="1368.0">
                                        <children>
-                                          <TextField fx:id="txtcargo" layoutX="304.0" layoutY="179.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Cargo">
+                                          <TextField fx:id="txtcargo" layoutX="258.0" layoutY="182.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Cargo" AnchorPane.leftAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="312.0" layoutY="157.0" text="Cargo" AnchorPane.leftAnchor="312.0" AnchorPane.topAnchor="157.0">
+                                          <Label layoutX="249.0" layoutY="157.0" text="Cargo" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="157.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <Label layoutX="503.0" layoutY="132.0" text="Departamento" AnchorPane.leftAnchor="312.0" AnchorPane.topAnchor="92.0">
+                                          <Label layoutX="245.0" layoutY="92.0" text="Departamento" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="92.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <Label layoutX="312.0" layoutY="222.0" text="Descrição das funções" AnchorPane.leftAnchor="312.0" AnchorPane.topAnchor="222.0">
+                                          <Label layoutX="245.0" layoutY="222.0" text="Descrição das funções" AnchorPane.leftAnchor="245.0" AnchorPane.topAnchor="222.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtfuncao" layoutX="303.0" layoutY="247.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Descrição das funções" AnchorPane.leftAnchor="303.0" AnchorPane.topAnchor="247.0">
+                                          <TextField fx:id="txtfuncao" layoutX="239.0" layoutY="247.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Descrição das funções" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="247.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="312.0" layoutY="297.0" text="Máquinas que opera" AnchorPane.leftAnchor="312.0">
+                                          <Label layoutX="239.0" layoutY="285.0" text="Máquinas que opera" AnchorPane.leftAnchor="245.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtmaquinas" layoutX="302.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Máquinas que opera" AnchorPane.leftAnchor="302.0">
+                                          <TextField fx:id="txtmaquinas" layoutX="240.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Máquinas que opera" AnchorPane.leftAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="312.0" layoutY="373.0" text="Data de admissão" AnchorPane.leftAnchor="312.0">
+                                          <Label layoutX="246.0" layoutY="356.0" text="Data de admissão" AnchorPane.leftAnchor="246.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtadmissao" layoutX="301.0" layoutY="398.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Data de admissão" AnchorPane.leftAnchor="301.0">
+                                          <TextField fx:id="txtadmissao" layoutX="240.0" layoutY="381.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Data de admissão" AnchorPane.leftAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="312.0" layoutY="443.0" text="Salário" AnchorPane.leftAnchor="312.0">
+                                          <Label layoutX="246.0" layoutY="420.0" text="Salário" AnchorPane.leftAnchor="246.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtsalario" layoutX="303.0" layoutY="468.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Salário" AnchorPane.leftAnchor="303.0">
+                                          <TextField fx:id="txtsalario" layoutX="240.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Salário" AnchorPane.leftAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <TextField fx:id="txtdadosbancarios" layoutX="941.0" layoutY="247.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Dados bancários (Para deposito salário)" AnchorPane.leftAnchor="941.0">
+                                          <TextField fx:id="txtdadosbancarios" layoutX="838.0" layoutY="247.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Dados bancários (Para deposito salário)" AnchorPane.leftAnchor="838.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="949.0" layoutY="508.0" text="Beneficios e Bonificações" AnchorPane.leftAnchor="949.0">
+                                          <Label layoutX="847.0" layoutY="485.0" text="Beneficios e Bonificações" AnchorPane.leftAnchor="847.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtbeneficios" layoutX="941.0" layoutY="533.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Beneficios e Bonificações" AnchorPane.bottomAnchor="176.0" AnchorPane.leftAnchor="941.0">
+                                          <TextField fx:id="txtbeneficios" layoutX="838.0" layoutY="510.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Beneficios e Bonificações" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="838.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="309.0" layoutY="508.0" text="Nivel de escolaridade" AnchorPane.rightAnchor="1055.0" AnchorPane.topAnchor="508.0">
+                                          <Label layoutX="248.0" layoutY="485.0" text="Nivel de escolaridade" AnchorPane.rightAnchor="1116.0" AnchorPane.topAnchor="485.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <Label layoutX="949.0" layoutY="92.0" text="CTPS (Numero, Serie e data de emissão)">
+                                          <Label layoutX="847.0" layoutY="92.0" text="CTPS (Numero, Serie e data de emissão)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtctps" layoutX="941.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="CTPS (Numero, Serie e data de emissão)" AnchorPane.rightAnchor="137.0" AnchorPane.topAnchor="115.0">
+                                          <TextField fx:id="txtctps" layoutX="838.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="CTPS (Numero, Serie e data de emissão)" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="115.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="949.0" layoutY="157.0" text="PIS/ Pasep">
+                                          <Label layoutX="847.0" layoutY="157.0" text="PIS/ Pasep" AnchorPane.leftAnchor="847.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtpis" layoutX="941.0" layoutY="179.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="PIS/ Pasep" AnchorPane.rightAnchor="137.0">
+                                          <TextField fx:id="txtpis" layoutX="834.0" layoutY="182.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="PIS/ Pasep" AnchorPane.rightAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="500.0" layoutY="92.0" text="Tipo de contrato (Temporario/CLT)" AnchorPane.rightAnchor="770.0">
+                                          <Label layoutX="438.0" layoutY="92.0" text="Tipo de contrato (Temporario/CLT)" AnchorPane.rightAnchor="832.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <Label layoutX="947.0" layoutY="297.0" text="Horario de trabalho (Dias, turno e carga horaria)">
+                                          <Label layoutX="847.0" layoutY="285.0" text="Horario de trabalho (Dias, turno e carga horaria)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txthorario" layoutX="941.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Horario de trabalho (Dias, turno e carga horaria)" AnchorPane.rightAnchor="137.0">
+                                          <TextField fx:id="txthorario" layoutX="838.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Horario de trabalho (Dias, turno e carga horaria)" AnchorPane.rightAnchor="240.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <TextField fx:id="txtacidentes" layoutX="941.0" layoutY="398.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Acidentes de trabalho (Data, descrição e medidas tomadas)" AnchorPane.rightAnchor="137.0">
+                                          <TextField fx:id="txtacidentes" layoutX="839.0" layoutY="381.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Acidentes de trabalho (Data, descrição e medidas tomadas)" AnchorPane.rightAnchor="239.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="949.0" layoutY="443.0" text="Advertências (Data e ocorrência)">
+                                          <Label layoutX="847.0" layoutY="420.0" text="Advertências (Data e ocorrência)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <TextField fx:id="txtadvertencias" layoutX="941.0" layoutY="468.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Advertências (Data e ocorrência)" AnchorPane.rightAnchor="137.0">
+                                          <TextField fx:id="txtadvertencias" layoutX="839.0" layoutY="445.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Advertências (Data e ocorrência)" AnchorPane.rightAnchor="239.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></TextField>
-                                          <Label layoutX="947.0" layoutY="222.0" text="Dados bancários (Para deposito salário)" AnchorPane.leftAnchor="947.0">
+                                          <Label layoutX="838.0" layoutY="222.0" text="Dados bancários (Para deposito salário)" AnchorPane.leftAnchor="847.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
-                                          <Label layoutX="947.0" layoutY="373.0" text="Acidentes de trabalho (Data, descrição e medidas tomadas)">
+                                          <Label layoutX="848.0" layoutY="356.0" text="Acidentes de trabalho (Data, descrição e medidas tomadas)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font></Label>
@@ -310,14 +310,14 @@
                                                 <Font name="System Bold" size="26.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="690.0" layoutY="628.0" mnemonicParsing="false" onAction="#salvarDadosProfissional" prefHeight="57.0" prefWidth="136.0" style="-fx-background-color: #6bc64f;" text="Cadastrar" textFill="WHITE" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="690.0" AnchorPane.rightAnchor="690.0">
+                                          <Button layoutX="681.0" layoutY="590.0" mnemonicParsing="false" onAction="#salvarDadosProfissional" prefHeight="57.0" prefWidth="136.0" style="-fx-background-color: #6bc64f;" text="Cadastrar" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="681.0" AnchorPane.rightAnchor="699.0">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
                                           </Button>
-                                          <ComboBox fx:id="comboBoxdepartamento" layoutX="302.0" layoutY="115.0" prefHeight="34.0" prefWidth="165.0" AnchorPane.bottomAnchor="594.0" AnchorPane.leftAnchor="304.0" />
-                                          <ComboBox fx:id="comboBoxcontrato" layoutX="552.0" layoutY="115.0" prefHeight="34.0" prefWidth="245.0" AnchorPane.rightAnchor="774.0" />
-                                          <ComboBox fx:id="comboBoxescolaridade" layoutX="301.0" layoutY="533.0" prefHeight="34.0" prefWidth="219.0" />
+                                          <ComboBox fx:id="comboBoxdepartamento" layoutX="240.0" layoutY="115.0" prefHeight="34.0" prefWidth="165.0" AnchorPane.bottomAnchor="594.0" AnchorPane.leftAnchor="240.0" />
+                                          <ComboBox fx:id="comboBoxcontrato" layoutX="433.0" layoutY="115.0" prefHeight="34.0" prefWidth="245.0" />
+                                          <ComboBox fx:id="comboBoxescolaridade" layoutX="239.0" layoutY="510.0" prefHeight="34.0" prefWidth="219.0" AnchorPane.leftAnchor="239.0" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -344,25 +344,32 @@
           </Tab>
           <Tab fx:id="tabVisualizacao" text="Visualização">
        <content>
-        <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1335.0">
+        <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1500.0">
                <children>
-                  <TabPane fx:id="tabPaneVisualizacao" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane fx:id="tabPaneVisualizacao" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="785.0" prefWidth="1516.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Dados Pessoais">
                            <content>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                              <AnchorPane prefHeight="748.0" prefWidth="1516.0">
                                        <children>
-                                          <ComboBox fx:id="filtroSexoFunc" layoutX="572.0" layoutY="136.0" prefHeight="23.0" prefWidth="151.0" />
-                                          <TextField fx:id="filtroNomeFunc" layoutX="348.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText=" Nome Completo" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="70.0">
+                                          <ComboBox fx:id="filtroSexoFunc" layoutX="512.0" layoutY="137.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="512.0" />
+                                          <TextField fx:id="filtroNomeFunc" layoutX="296.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText=" Nome Completo" AnchorPane.leftAnchor="304.0" AnchorPane.topAnchor="70.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <Button layoutX="1143.0" layoutY="131.0" mnemonicParsing="false" onAction="#filtrarDadopessoal" prefHeight="47.0" prefWidth="119.0" style="-fx-background-color: #6599cd;" text="   Filtrar" textFill="WHITE" AnchorPane.leftAnchor="1143.0" AnchorPane.rightAnchor="658.0" AnchorPane.topAnchor="131.0">
+                                          <Button layoutX="962.0" layoutY="126.0" mnemonicParsing="false" onAction="#filtrarDadopessoal" prefHeight="47.0" prefWidth="119.0" style="-fx-background-color: #6599cd;" text="Filtrar" textFill="WHITE" AnchorPane.topAnchor="126.0">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
+                                             <graphic>
+                                                <ImageView fitHeight="27.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@iconFiltrar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
                                           </Button>
-                                          <TableView fx:id="tableDadoPessoal" layoutX="-1.0" layoutY="315.0" prefHeight="691.0" prefWidth="1920.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="315.0">
+                                          <TableView fx:id="tableDadoPessoal" layoutX="-1.0" layoutY="315.0" prefHeight="423.0" prefWidth="1500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="315.0">
                                             <columns>
                                                 <TableColumn fx:id="colIdFunc" prefWidth="75.0" sortType="DESCENDING" text="ID" />
                                               <TableColumn id="colNome" fx:id="colNomeFunc" prefWidth="150.0" text="Nome" />
@@ -383,78 +390,73 @@
                                                 <TableColumn id="colContato_Emergencia" fx:id="colContato_EmergenciaFunc" prefWidth="120.0" text="Contato Emergência" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="filtroCpfFunc" layoutX="812.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText="CPF" AnchorPane.leftAnchor="812.0">
+                                          <TextField fx:id="filtroCpfFunc" layoutX="715.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText="CPF" AnchorPane.leftAnchor="720.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <TextField fx:id="filtroRgFunc" layoutX="813.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="RG">
+                                          <TextField fx:id="filtroRgFunc" layoutX="720.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="RG">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <ComboBox fx:id="filtroEstadoCivilFunc" layoutX="572.0" layoutY="73.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="572.0" />
-                                          <TextField fx:id="filtroNaturalidadeFunc" layoutX="348.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Naturalidade" AnchorPane.bottomAnchor="790.0" AnchorPane.topAnchor="200.0">
+                                          <ComboBox fx:id="filtroEstadoCivilFunc" layoutX="512.0" layoutY="73.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="512.0" />
+                                          <TextField fx:id="filtroNaturalidadeFunc" layoutX="348.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Naturalidade" AnchorPane.bottomAnchor="790.0" AnchorPane.leftAnchor="304.0" AnchorPane.topAnchor="200.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <TextField fx:id="filtroDataNascimentoFunc" layoutX="348.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="Data de nascimento" AnchorPane.topAnchor="134.0">
+                                          <TextField fx:id="filtroDataNascimentoFunc" layoutX="304.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="Data de nascimento" AnchorPane.leftAnchor="304.0" AnchorPane.topAnchor="134.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <TextField fx:id="filtroEnderecoFunc" layoutX="812.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Endereço completo">
+                                          <TextField fx:id="filtroEnderecoFunc" layoutX="720.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Endereço completo">
                                              <font>
                                                 <Font size="14.0" />
                                              </font></TextField>
-                                          <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="1157.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="1157.0">
-                                             <image>
-                                                <Image url="@iconFiltrar.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Label layoutX="349.0" layoutY="48.0" text="Nome completo" AnchorPane.topAnchor="48.0">
+                                          <Label layoutX="309.0" layoutY="48.0" text="Nome completo" AnchorPane.topAnchor="48.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="572.0" layoutY="48.0" text="Estado civil">
+                                          <Label layoutX="519.0" layoutY="48.0" text="Estado civil">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="572.0" layoutY="115.0" text="Sexo">
+                                          <Label layoutX="519.0" layoutY="115.0" prefHeight="19.0" prefWidth="38.0" text="Sexo">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="348.0" layoutY="115.0" text="Data de nascimento" AnchorPane.topAnchor="115.0">
+                                          <Label layoutX="309.0" layoutY="115.0" text="Data de nascimento" AnchorPane.topAnchor="115.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="348.0" layoutY="180.0" text="Naturalidade" AnchorPane.topAnchor="180.0">
+                                          <Label layoutX="309.0" layoutY="180.0" text="Naturalidade" AnchorPane.topAnchor="180.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="572.0" layoutY="181.0" text="Tipo sanguineo">
+                                          <Label layoutX="519.0" layoutY="180.0" text="Tipo sanguineo">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="811.0" layoutY="48.0" text="CPF">
+                                          <Label layoutX="724.0" layoutY="48.0" text="CPF">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="814.0" layoutY="115.0" text="RG">
+                                          <Label layoutX="727.0" layoutY="115.0" text="RG">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="812.0" layoutY="180.0" text="Endereço completo">
+                                          <Label layoutX="727.0" layoutY="180.0" text="Endereço completo">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="1335.0" layoutY="131.0" mnemonicParsing="false" onAction="#limparFiltro" prefHeight="47.0" prefWidth="157.0" style="-fx-background-color: #dd3636;" text="Limpar filtro" textFill="WHITE" AnchorPane.leftAnchor="1346.0" AnchorPane.topAnchor="131.0">
+                                          <Button layoutX="1144.0" layoutY="127.0" mnemonicParsing="false" onAction="#limparFiltro" prefHeight="47.0" prefWidth="157.0" style="-fx-background-color: #dd3636;" text="Limpar filtro" textFill="WHITE" AnchorPane.rightAnchor="215.0" AnchorPane.topAnchor="126.0">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
@@ -466,7 +468,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <ComboBox fx:id="filtroTipoSanguineoFunc" layoutX="572.0" layoutY="203.0" prefHeight="23.0" prefWidth="151.0" />
+                                          <ComboBox fx:id="filtroTipoSanguineoFunc" layoutX="572.0" layoutY="203.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="512.0" />
                                        </children>
                               </AnchorPane>
                            </content>
@@ -480,9 +482,9 @@
                       </Tab>
                       <Tab text="Dados Profissionais">
                         <content>
-                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="922.0" prefWidth="1920.0">
+                          <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1508.0">
                                        <children>
-                                          <TableView fx:id="tableDadoProfissional" layoutY="316.0" prefHeight="607.0" prefWidth="1958.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-38.0" AnchorPane.topAnchor="315.0">
+                                          <TableView fx:id="tableDadoProfissional" layoutY="316.0" prefHeight="427.0" prefWidth="1502.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="315.0">
                                             <columns>
                                                 <TableColumn fx:id="colIdprof" prefWidth="56.0" text="Id" />
                                                 <TableColumn fx:id="colNomeJun" prefWidth="60.0" text="Nome" />
@@ -503,105 +505,109 @@
                                                 <TableColumn fx:id="colAdvertencia" prefWidth="116.0" text="Advertencia" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="filtrocargo" layoutX="268.0" layoutY="51.0" prefHeight="23.0" prefWidth="151.0" promptText="Cargo" AnchorPane.leftAnchor="348.0" AnchorPane.topAnchor="70.0">
+                                          <TextField fx:id="filtrocargo" layoutX="268.0" layoutY="51.0" prefHeight="23.0" prefWidth="151.0" promptText="Cargo" AnchorPane.leftAnchor="304.0" AnchorPane.topAnchor="70.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="filtroadmissao" layoutX="826.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText="Data de admissão" AnchorPane.leftAnchor="812.0">
+                                          <TextField fx:id="filtroadmissao" layoutX="826.0" layoutY="70.0" prefHeight="23.0" prefWidth="151.0" promptText="Data de admissão" AnchorPane.leftAnchor="720.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="filtrosalario" layoutX="348.0" layoutY="135.0" prefHeight="23.0" prefWidth="151.0" promptText="Salario" AnchorPane.topAnchor="134.0">
+                                          <TextField fx:id="filtrosalario" layoutX="304.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="Salario" AnchorPane.topAnchor="134.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="filtrobeneficios" layoutX="348.0" layoutY="197.0" prefHeight="23.0" prefWidth="151.0" promptText="Beneficios" AnchorPane.topAnchor="200.0">
+                                          <TextField fx:id="filtrobeneficios" layoutX="304.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Beneficios" AnchorPane.topAnchor="200.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="filtrohorario" layoutX="826.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="Horario de trabalho" AnchorPane.leftAnchor="812.0">
+                                          <TextField fx:id="filtrohorario" layoutX="720.0" layoutY="134.0" prefHeight="23.0" prefWidth="151.0" promptText="Horario de trabalho" AnchorPane.leftAnchor="720.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="filtroacidentes" layoutX="826.0" layoutY="200.0" prefHeight="23.0" prefWidth="151.0" promptText="Acidente de trabalho" AnchorPane.leftAnchor="812.0">
+                                          <TextField fx:id="filtroacidentes" layoutX="720.0" layoutY="201.0" prefHeight="23.0" prefWidth="151.0" promptText="Acidente de trabalho" AnchorPane.leftAnchor="720.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </TextField>
-                                          <Button layoutX="1126.0" layoutY="120.0" mnemonicParsing="false" onAction="#filtrarDadoProfissional" prefHeight="47.0" prefWidth="119.0" style="-fx-background-color: #6599cd;" text="   Filtrar" textFill="WHITE" AnchorPane.leftAnchor="1157.0" AnchorPane.topAnchor="131.0">
+                                          <Button layoutX="1126.0" layoutY="120.0" mnemonicParsing="false" onAction="#filtrarDadoProfissional" prefHeight="47.0" prefWidth="119.0" style="-fx-background-color: #6599cd;" text="Filtrar" textFill="WHITE" AnchorPane.leftAnchor="962.0" AnchorPane.topAnchor="126.0">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
+                                             <graphic>
+      
+                                                <ImageView fitHeight="27.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@iconFiltrar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
                                           </Button>
-                                          <ComboBox fx:id="filtrodepartamento" layoutX="585.0" layoutY="138.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="572.0" />
-                                          <ComboBox fx:id="filtrocontrato" layoutX="585.0" layoutY="203.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="572.0" />
-                                          <Label layoutX="348.0" layoutY="38.0" text="Cargo" AnchorPane.topAnchor="48.0">
+                                          <ComboBox fx:id="filtrodepartamento" layoutX="512.0" layoutY="137.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="512.0" />
+                                          <ComboBox fx:id="filtrocontrato" layoutX="512.0" layoutY="203.0" prefHeight="23.0" prefWidth="151.0" AnchorPane.leftAnchor="512.0" />
+                                          <Label layoutX="312.0" layoutY="48.0" text="Cargo" AnchorPane.topAnchor="48.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="348.0" layoutY="92.0" text="Salario" AnchorPane.topAnchor="115.0">
+                                          <Label layoutX="312.0" layoutY="115.0" text="Salario" AnchorPane.topAnchor="115.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="346.0" layoutY="182.0" text="Beneficios e bonificações" AnchorPane.topAnchor="180.0">
+                                          <Label layoutX="312.0" layoutY="180.0" text="Beneficios e bonificações" AnchorPane.topAnchor="180.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="585.0" layoutY="48.0" text="Escolaridade" AnchorPane.leftAnchor="572.0">
+                                          <Label layoutX="517.0" layoutY="48.0" text="Escolaridade" AnchorPane.leftAnchor="517.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="586.0" layoutY="115.0" text="Departamemto" AnchorPane.leftAnchor="572.0">
+                                          <Label layoutX="517.0" layoutY="115.0" text="Departamemto" AnchorPane.leftAnchor="517.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="585.0" layoutY="180.0" text="Contrato" AnchorPane.leftAnchor="572.0">
+                                          <Label layoutX="517.0" layoutY="180.0" text="Contrato" AnchorPane.leftAnchor="517.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="826.0" layoutY="48.0" text="Data de admissão" AnchorPane.leftAnchor="812.0">
+                                          <Label layoutX="727.0" layoutY="48.0" text="Data de admissão" AnchorPane.leftAnchor="727.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="826.0" layoutY="115.0" text="Horário de trabalho" AnchorPane.leftAnchor="812.0">
+                                          <Label layoutX="727.0" layoutY="115.0" text="Horário de trabalho" AnchorPane.leftAnchor="727.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="826.0" layoutY="180.0" text="Acidentes de trabalho" AnchorPane.leftAnchor="812.0">
+                                          <Label layoutX="728.0" layoutY="180.0" text="Acidentes de trabalho" AnchorPane.leftAnchor="728.0">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Label>
-                                        <ComboBox fx:id="filtroescolaridade" layoutX="586.0" layoutY="73.0" prefHeight="23.0" prefWidth="151.0" style="-fx-font-size: 14px;" AnchorPane.leftAnchor="572.0" />
-
-                                          <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="1166.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@iconFiltrar.png" />
-                                             </image>
-                                          </ImageView>
-                                          <Button layoutX="1346.0" layoutY="131.0" mnemonicParsing="false" onAction="#limparFiltro" prefHeight="47.0" prefWidth="157.0" style="-fx-background-color: #dd3636;" text="    Limpar filtro" textFill="WHITE" AnchorPane.leftAnchor="1346.0" AnchorPane.topAnchor="131.0">
+                                        <ComboBox fx:id="filtroescolaridade" layoutX="586.0" layoutY="73.0" prefHeight="23.0" prefWidth="151.0" style="-fx-font-size: 14px;" AnchorPane.leftAnchor="512.0" />
+                                          <Button layoutX="1142.0" layoutY="126.0" mnemonicParsing="false" onAction="#limparFiltro" prefHeight="47.0" prefWidth="157.0" style="-fx-background-color: #dd3636;" text="Limpar filtro" textFill="WHITE" AnchorPane.rightAnchor="209.0" AnchorPane.topAnchor="126.0">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
+                                             <graphic>
+                                                <ImageView fitHeight="27.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@iconLimpar.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
                                           </Button>
-                                          <ImageView fitHeight="27.0" fitWidth="28.0" layoutX="1358.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@iconLimpar.png" />
-                                             </image>
-                                          </ImageView>
                                        </children>
                               </AnchorPane>
                         </content>
@@ -736,7 +742,7 @@
                                                 <Font name="System Bold" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="633.0" layoutY="632.0" mnemonicParsing="false" onAction="#atualizarDadoPessoal" prefHeight="55.0" prefWidth="263.0" style="-fx-background-color: #a8a8a8;" text="Ir para os dados profissionais" textFill="WHITE" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="633.0" AnchorPane.rightAnchor="620.0">
+                                          <Button layoutX="633.0" layoutY="632.0" mnemonicParsing="false" onAction="#atualizarDadoPessoal" prefHeight="55.0" prefWidth="263.0" style="-fx-background-color: #a8a8a8;" text="Ir para os dados profissionais" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="633.0" AnchorPane.rightAnchor="620.0">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -768,7 +774,7 @@
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <TextField id="textCargoAtual" fx:id="txtcargoAtualizarFunc" layoutX="905.0" layoutY="117.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Cargo" AnchorPane.leftAnchor="905.0" AnchorPane.rightAnchor="173.0">
+                                          <TextField id="textCargoAtual" fx:id="txtcargoAtualizarFunc" layoutX="905.0" layoutY="117.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="219.0" promptText="Cargo" AnchorPane.leftAnchor="905.0" AnchorPane.rightAnchor="392.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
@@ -855,12 +861,12 @@
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="914.0" layoutY="410.0" text="Horario de trabalho (Dias, turno e carga horaria)" AnchorPane.leftAnchor="914.0">
+                                          <Label layoutX="914.0" layoutY="348.0" text="Horario de trabalho" AnchorPane.leftAnchor="914.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <TextField id="textHorárioAtual" fx:id="txthorarioAtualizarFunc" layoutX="905.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Horario de trabalho (Dias, turno e carga horaria)" AnchorPane.leftAnchor="905.0">
+                                          <TextField id="textHorárioAtual" fx:id="txthorarioAtualizarFunc" layoutX="905.0" layoutY="370.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="219.0" promptText="Horario de trabalho" AnchorPane.leftAnchor="905.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
@@ -870,22 +876,22 @@
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="915.0" layoutY="540.0" text="Acidentes de trabalho (Data, descrição e medidas tomadas)" AnchorPane.leftAnchor="915.0">
+                                          <Label layoutX="915.0" layoutY="478.0" text="Acidentes de trabalho (Data, descrição e medidas tomadas)" AnchorPane.leftAnchor="915.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <TextField id="textAcidentesAtual" fx:id="txtacidentesAtualizarFunc" layoutX="905.0" layoutY="565.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Acidentes de trabalho (Data, descrição e medidas tomadas)">
+                                          <TextField id="textAcidentesAtual" fx:id="txtacidentesAtualizarFunc" layoutX="905.0" layoutY="503.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Acidentes de trabalho (Data, descrição e medidas tomadas)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                           </TextField>
-                                          <Label layoutX="914.0" layoutY="475.0" text="Advertências (Data e ocorrência)" AnchorPane.leftAnchor="914.0">
+                                          <Label layoutX="914.0" layoutY="410.0" text="Advertências (Data e ocorrência)" AnchorPane.leftAnchor="914.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <TextField id="textAdvertências" fx:id="txtadvertenciasAtualizarFunc" layoutX="905.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Advertências (Data e ocorrência)">
+                                          <TextField id="textAdvertências" fx:id="txtadvertenciasAtualizarFunc" layoutX="905.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="438.0" promptText="Advertências (Data e ocorrência)">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
@@ -895,14 +901,14 @@
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
-                                          <Label layoutX="910.0" layoutY="344.0" text="Departamento" AnchorPane.leftAnchor="914.0">
+                                          <Label layoutX="1149.0" layoutY="92.0" text="Departamento" AnchorPane.leftAnchor="1149.0">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
                                           </Label>
                                           <ComboBox fx:id="comboBoxcontratoAtualizarFunc" layoutX="304.0" layoutY="435.0" prefHeight="34.0" prefWidth="264.0" />
-                                          <ComboBox fx:id="comboBoxdepartamentoAtualizarFunc" layoutX="905.0" layoutY="370.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="905.0" />
-                                          <Button layoutX="530.0" layoutY="637.0" mnemonicParsing="false" onAction="#atualizarDadoProfissional" prefHeight="55.0" prefWidth="208.0" style="-fx-background-color: #6bc64f;" text="Salvar alterações" textFill="WHITE" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="530.0">
+                                          <ComboBox fx:id="comboBoxdepartamentoAtualizarFunc" layoutX="1143.0" layoutY="117.0" prefHeight="34.0" prefWidth="200.0" AnchorPane.leftAnchor="1143.0" />
+                                          <Button layoutX="530.0" layoutY="637.0" mnemonicParsing="false" onAction="#atualizarDadoProfissional" prefHeight="55.0" prefWidth="208.0" style="-fx-background-color: #6bc64f;" text="Salvar alterações" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="530.0">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
@@ -914,7 +920,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <Button layoutX="778.0" layoutY="642.0" mnemonicParsing="false" onAction="#excluirAtualizar" prefHeight="55.0" prefWidth="208.0" style="-fx-background-color: #dd3636;" text="Deletar funcionário" textFill="WHITE" AnchorPane.bottomAnchor="65.0" AnchorPane.rightAnchor="530.0">
+                                          <Button layoutX="778.0" layoutY="642.0" mnemonicParsing="false" onAction="#excluirAtualizar" prefHeight="55.0" prefWidth="208.0" style="-fx-background-color: #dd3636;" text="Deletar funcionário" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.rightAnchor="530.0">
                                              <font>
                                                 <Font name="System Bold" size="16.0" />
                                              </font>
