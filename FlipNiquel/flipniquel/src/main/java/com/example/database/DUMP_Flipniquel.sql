@@ -70,14 +70,52 @@ DROP INDEX `dadosbancarios_UNIQUE` ,
 DROP INDEX `pisPasep_UNIQUE` ,
 DROP INDEX `ctps_UNIQUE` ;
 
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, 
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia) 
-VALUES ('Fernanda Lima Oliveira', '14/03/1990', 'Feminino', 'Casado(a)', 'Ricardo Oliveira', 'Lucas Oliveira, Mariana Oliveira', 'Brasil', 'Curitiba-PR', 
-'321.654.987-00', '45.678.321', 'Rua das Palmeiras, 200 - Curitiba - PR', '(41) 99876-5432', 'fernanda.lima@email.com', 'Carlos Lima e Teresa Lima', 'A+', '(41) 99700-1122');
+-- Insert 1
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
+cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Mariana Silva Souza', '1995-07-22', 'Feminino', 'Solteiro(a)', NULL, NULL, 'Brasil', 'Londrina-PR',
+'98765432101', 'PR12345678', 'Rua das Flores, 150 - Londrina - PR', '(43) 99111-2222', 'mariana.silva@email.com', 'José Silva e Ana Souza', 'A+', '(43) 99333-4444');
 
-INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias) 
-VALUES ('Analista Financeira Sênior', 'Financeiro', 'Controle orçamentário, relatórios e auditorias internas', 'Notebook, Calculadora financeira', '05/08/2021', '6700.00', 'Banco do Brasil - Ag. 1122 - C/C 556677-8', 
-'Plano de Saúde, Vale Alimentação', 'Graduação Completa(Bacharelado)', '554433', '98712365400', 'CLT', '08:00 às 17:00', '', 'Advertência verbal em 2022 por atraso');
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Técnico em Automação', 'Automação', 'Manutenção e programação de sistemas automatizados', 'CLP, Sensores, Atuadores', '2023-03-10', '4500.00', 'Banco Itaú - Ag. 0123 - CC 98765-4', 'Vale Transporte, Plano de Saúde', 'Técnico Completo', '1234567', '10987654321', 'CLT', '08:00 - 18:00', '', '', '98765432101');
+
+-- Insert 2
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
+cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Carlos Alberto Oliveira', '1988-11-05', 'Masculino', 'Casado(a)', 'Fernanda Pereira Oliveira', 'Lucas Oliveira', 'Brasil', 'Maringá-PR',
+'12345678902', 'PR87654321', 'Avenida Paraná, 300 - Maringá - PR', '(44) 99888-7777', 'carlos.alberto@email.com', 'Antônio Oliveira e Maria Oliveira', 'B-', '(44) 99666-5555');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Auxiliar de Estoque', 'Estoque', 'Organização e controle de materiais', 'Empilhadeira manual, Computador', '2024-01-15', '2100.00', 'Banco do Brasil - Ag. 4567 - CC 12345-6', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '8765432', '21098765432', 'CLT', '07:00 - 17:00', '', '', '12345678902');
+
+-- Insert 3
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
+cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Ana Paula Santos', '1992-04-18', 'Feminino', 'Divorciado(a)', NULL, 'Pedro Santos', 'Brasil', 'Curitiba-PR',
+'34567890103', 'PR23456789', 'Rua XV de Novembro, 800 - Curitiba - PR', '(41) 99777-6666', 'ana.paula@email.com', 'Ricardo Santos e Cláudia Santos', 'O+', '(41) 99555-4444');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista Financeiro Júnior', 'Financeiro', 'Contas a pagar, contas a receber, fluxo de caixa', 'Computador, Planilhas eletrônicas', '2024-08-01', '3800.00', 'Caixa Econômica - Ag. 7890 - CC 65432-1', 'Vale Transporte, Plano de Saúde', 'Graduação Completa (Bacharelado)', '3456789', '32109876543', 'CLT', '08:00 - 18:00', '', '', '34567890103');
+
+-- Insert 4
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
+cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('João Pedro Almeida', '1999-12-10', 'Masculino', 'Solteiro(a)', NULL, NULL, 'Argentina', 'Buenos Aires',
+'45678901204', 'AR98765432', 'Avenida San Martín, 123 - Buenos Aires', '+54 11 1234-5678', 'joao.almeida@email.com', 'Pablo Almeida e Sofia Gomez', 'AB-', '+54 11 9876-5432');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Auxiliar de Manutenção', 'Manutenção', 'Suporte na manutenção preventiva e corretiva', 'Ferramentas manuais, Computador', '2025-05-01', '1900.00', 'Banco Santander - Ag. 1122 - CC 34567-8', 'Vale Transporte', 'Médio Incompleto', '4567890', '43210987654', 'Temporário', '08:00 - 17:00', '', '', '45678901204');
+
+-- Insert 5
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade,
+cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Fernanda Oliveira Costa', '1985-06-01', 'Feminino', 'Casado(a)', 'Ricardo Costa', 'Mariana Costa', 'Brasil', 'Londrina-PR',
+'56789012305', 'PR34567890', 'Rua Espírito Santo, 400 - Londrina - PR', '(43) 99666-5555', 'fernanda.costa@email.com', 'Manuel Oliveira e Carmen Costa', 'O-', '(43) 99444-3333');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Operador de Produção', 'Produção', 'Operação de máquinas na linha de produção', 'Esteira, Máquinas CNC', '2022-09-20', '2800.00', 'Banco Bradesco - Ag. 7890 - CC 98765-0', 'Vale Transporte, Vale Alimentação', 'Médio Completo', '5678901', '54321098765', 'CLT', '14:00 - 22:00', '', '', '56789012305');
+
+
 
 
 CREATE TABLE usuarioFinanceiro(
