@@ -27,7 +27,7 @@ import java.sql.*;
 
 
 // Declaração da classe que atua como controller na arquitetura MVC (Model-View-Controller)
-public class DadoPessoalController {
+public class RhController {
 
     // Campos da interface gráfica (FXML) para o cadastro de dados pessoais do funcionário
     @FXML private TextField txtnome_completoFunc;
@@ -435,92 +435,96 @@ public class DadoPessoalController {
             }
         });
     }
-    
-    
 
 // Método para preencher os campos de dados pessoais e profissionais quando um dado pessoal é selecionado
 private void preencherMultiplosCampos(DadoPessoal dadopessoalSelecionado) {
-    if (dadopessoalSelecionado == null) return; // Se não houver seleção, não faz nada
+    if (dadopessoalSelecionado == null) {
+        System.out.println("Dado pessoal selecionado é nulo. Retornando.");
+        return; // Se não houver seleção, não faz nada
+    }
 
-    // Procura o dado profissional correspondente usando o ID do dado pessoal
+    String cpfSelecionado = dadopessoalSelecionado.getCpf();
+    // Procura o dado profissional correspondente usando o CPF do dado pessoal
     DadoProfissional dadoprofissionalSelecionado = tableDadoProfissional.getItems().stream()
-        .filter(p -> p.getIdprof() == dadopessoalSelecionado.getId())
+        .filter(p -> {
+            return p.getDados_pessoais().equals(cpfSelecionado);
+        })
         .findFirst()
         .orElse(null);
 
     if (dadoprofissionalSelecionado != null) {
         // Preenche os campos de dados pessoais e profissionais se encontrados
         preencherCamposAtualizacaoPessoal(dadopessoalSelecionado);
-        preencherCamposAtualizacaoProfissional(dadoprofissionalSelecionado);
+        preencherCamposAtualizacaoProfissional(dadoprofissionalSelecionado);  
     } else {
-        System.err.println("ERRO AO CARREGAR!");
+        System.err.println("ERRO AO CARREGAR! Nenhum dado profissional encontrado para o CPF: " + cpfSelecionado);
     }
 }
 
-       
-    
-
 // Método para salvar os dados profissionais e pessoais no banco de dados   
 @FXML
-private void salvarDadosProfissional() {
+    private void salvarDadosProfissional() {
 
-    
-    try (Connection conn = Database.getConnection(); // Estabelece a conexão com o banco
-         // Preparação para inserção dos dados pessoais
-         PreparedStatement stmt = conn.prepareStatement("INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-         // Preparação para inserção dos dados profissionais
-         PreparedStatement stmt_1 = conn.prepareStatement("INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
-                
-                // Insere dados pessoais
-                stmt.setString(1, txtnome_completoFunc.getText());// Preenche com os dados do formulário
-                stmt.setString(2, txtdatanascimentoFunc.getText());
-                stmt.setString(3, comboBoxSexo.getValue());
-                stmt.setString(4, comboBoxEstadoCivil.getValue());
-                stmt.setString(5, txtconjugeFunc.getText());
-                stmt.setString(6, txtdependentesFunc.getText());
-                stmt.setString(7, comboBoxNacionalidade.getValue());
-                stmt.setString(8, txtnaturalidadeFunc.getText());
-                stmt.setString(9, txtcpfFunc.getText());
-                stmt.setString(10, txtrgFunc.getText());
-                stmt.setString(11, txtenderecoFunc.getText());
-                stmt.setString(12, txttelefoneFunc.getText());
-                stmt.setString(13, txtemailFunc.getText());
-                stmt.setString(14, txtfiliacaoFunc.getText());
-                stmt.setString(15, comboBoxtipo_sanguineoFunc.getValue());
-                stmt.setString(16, txtcontato_emergenciaFunc.getText());
-                stmt.executeUpdate(); // Executa a inserção/atualização dos dados pessoais
+        try (Connection conn = Database.getConnection(); // Estabelece a conexão com o banco
+             // Preparação para inserção dos dados pessoais
+             PreparedStatement stmt = conn.prepareStatement("INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+             // Preparação para inserção dos dados profissionais
+             PreparedStatement stmt_1 = conn.prepareStatement("INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
 
-                // Insere dados profissionais
-                stmt_1.setString(1, txtcargo.getText());
-                stmt_1.setString(2, comboBoxdepartamento.getValue());
-                stmt_1.setString(3, txtfuncao.getText());
-                stmt_1.setString(4, txtmaquinas.getText());
-                stmt_1.setString(5, txtadmissao.getText());
-                stmt_1.setString(6, txtsalario.getText());
-                stmt_1.setString(7, txtdadosbancarios.getText());
-                stmt_1.setString(8, txtbeneficios.getText());
-                stmt_1.setString(9, comboBoxescolaridade.getValue());
-                stmt_1.setString(10, txtctps.getText());
-                stmt_1.setString(11, txtpis.getText());
-                stmt_1.setString(12, comboBoxcontrato.getValue());
-                stmt_1.setString(13, txthorario.getText());
-                stmt_1.setString(14, txtacidentes.getText());
-                stmt_1.setString(15, txtadvertencias.getText());
-                stmt_1.setString(16, txtcpfFunc.getText());// Relaciona o dado profissional ao dado pessoal
-                stmt_1.executeUpdate(); // Executa a inserção/atualização dos dados profissionais
+            // Obtém o CPF digitado
+            String cpfDigitado = txtcpfFunc.getText();
+            // Formata o CPF
+            String cpfFormatado = formatarCPF(cpfDigitado);
 
-           
-            
-                carregarDadoProfissional();
-                carregarDadoPessoal();
+            // Insere dados pessoais
+            stmt.setString(1, txtnome_completoFunc.getText());// Preenche com os dados do formulário
+            stmt.setString(2, txtdatanascimentoFunc.getText());
+            stmt.setString(3, comboBoxSexo.getValue());
+            stmt.setString(4, comboBoxEstadoCivil.getValue());
+            stmt.setString(5, txtconjugeFunc.getText());
+            stmt.setString(6, txtdependentesFunc.getText());
+            stmt.setString(7, comboBoxNacionalidade.getValue());
+            stmt.setString(8, txtnaturalidadeFunc.getText());
+            stmt.setString(9, cpfFormatado); // Usa o CPF formatado
+            stmt.setString(10, txtrgFunc.getText());
+            stmt.setString(11, txtenderecoFunc.getText());
+            stmt.setString(12, txttelefoneFunc.getText());
+            stmt.setString(13, txtemailFunc.getText());
+            stmt.setString(14, txtfiliacaoFunc.getText());
+            stmt.setString(15, comboBoxtipo_sanguineoFunc.getValue());
+            stmt.setString(16, txtcontato_emergenciaFunc.getText());
+            stmt.executeUpdate(); // Executa a inserção/atualização dos dados pessoais
+
+            // Insere dados profissionais
+            stmt_1.setString(1, txtcargo.getText());
+            stmt_1.setString(2, comboBoxdepartamento.getValue());
+            stmt_1.setString(3, txtfuncao.getText());
+            stmt_1.setString(4, txtmaquinas.getText());
+            stmt_1.setString(5, txtadmissao.getText());
+            stmt_1.setString(6, txtsalario.getText());
+            stmt_1.setString(7, txtdadosbancarios.getText());
+            stmt_1.setString(8, txtbeneficios.getText());
+            stmt_1.setString(9, comboBoxescolaridade.getValue());
+            stmt_1.setString(10, txtctps.getText());
+            stmt_1.setString(11, txtpis.getText());
+            stmt_1.setString(12, comboBoxcontrato.getValue());
+            stmt_1.setString(13, txthorario.getText());
+            stmt_1.setString(14, txtacidentes.getText());
+            stmt_1.setString(15, txtadvertencias.getText());
+            stmt_1.setString(16, cpfFormatado); // Usa o CPF formatado para relacionar
+            stmt_1.executeUpdate(); // Executa a inserção/atualização dos dados profissionais
+
+            carregarDadoProfissional();
+            carregarDadoPessoal();
             // Tratamento de erro ou acerto
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário salvo com sucesso!");
         } catch (SQLException e) {
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao salvar funcionário: " + e.getMessage());
         }
 
-    limparCadastrar();
+        limparCadastrar();
     }
+
 
     @FXML
     public void limparCadastrar() {
@@ -760,7 +764,7 @@ public void atualizarDadoProfissional() {
                 listaDadoProfissional.clear(); // Limpa a lista de dados profissionais antes de carregar novos dados.
                 try (Connection conn = Database.getConnection();
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT dpf.idprof, dp.nome_completo,dpf.cargo, dpf.departamento, dpf.funcao, dpf.maquinas, dpf.admissao, dpf.salario, dpf.dadosbancarios, dpf.beneficios, dpf.escolaridade, dpf.ctps, dpf.pisPasep, dpf.contrato, dpf.horario, dpf.acidentes, dpf.advertencias, dpf.dados_pessoais FROM Industria_db.dadospessoais dp JOIN Industria_db.dadosprofissionais dpf ON dp.cpf = dpf.dados_pessoais")) {
+                    ResultSet rs = stmt.executeQuery("SELECT dpf.idprof, dp.nome_completo,dpf.cargo, dpf.departamento, dpf.funcao, dpf.maquinas, dpf.admissao, dpf.salario, dpf.dadosbancarios, dpf.beneficios, dpf.escolaridade, dpf.ctps, dpf.pisPasep, dpf.contrato, dpf.horario, dpf.acidentes, dpf.advertencias, dpf.dados_pessoais FROM dadospessoais dp JOIN dadosprofissionais dpf ON dp.cpf = dpf.dados_pessoais")) {
   
                     // Processa cada linha retornada pela consulta e adiciona os dados na lista.
                     while (rs.next()) {
@@ -910,49 +914,58 @@ public void atualizarDadoProfissional() {
 
         tableDadoProfissional.setItems(listaDadoProfissional);   // Limpa os filtros para os dados profissionais também.
     }
-    
+
     @FXML
-    public void excluirAtualizar(){
-        // Obtém os itens selecionados nas tabelas de dados pessoais e profissionais.
-        DadoPessoal dadoPessoalSelecionado = tableDadoPessoal.getSelectionModel().getSelectedItem();
-        DadoProfissional dadoProfissionalSelecionado = tableDadoProfissional.getSelectionModel().getSelectedItem();
-        
-        // Verifica se ambos os registros foram selecionados antes de excluir
-        if (dadoPessoalSelecionado != null && dadoProfissionalSelecionado != null ) {
+public void excluirAtualizar() {
+    // Obtém o item selecionado na tabela de dados pessoais.
+    DadoPessoal dadoPessoalSelecionado = tableDadoPessoal.getSelectionModel().getSelectedItem();
 
-            // Primeira Conexão e statement para deletar os dados profissionais executando comandos SQL dentro do seu banco de dados.
-            try (Connection conn_1 = Database.getConnection();
-            PreparedStatement stmt_1 = conn_1.prepareStatement("DELETE FROM dadosprofissionais WHERE dados_pessoais = ?");
-            
-            // Segunda Conexão e statement para deletar os dados pessoais executando comandos SQL dentro do seu banco de dados.
-            Connection conn = Database.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?");
-             ) {
+    // Verifica se um registro foi selecionado antes de excluir
+    if (dadoPessoalSelecionado != null) {
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmtProfissional = conn.prepareStatement("DELETE FROM dadosprofissionais WHERE dados_pessoais = ?");
+             PreparedStatement stmtPessoal = conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?")) {
 
-                // Define o valor do parâmetro para deletar dados profissionais com base no CPF vinculado.
-                stmt_1.setString(1, dadoProfissionalSelecionado.getDados_pessoais());
-                stmt_1.executeUpdate(); // Executa a exclusão dos dados profissionais.
+            // Define o valor do parâmetro para deletar dados profissionais com base no CPF vinculado.
+            stmtProfissional.setString(1, dadoPessoalSelecionado.getCpf());
+            stmtProfissional.executeUpdate(); // Executa a exclusão dos dados profissionais.
 
-                // Define o valor do parâmetro para deletar dados pessoais com base no CPF.
-                stmt.setString(1, dadoPessoalSelecionado.getCpf());
-                stmt.executeUpdate(); // Executa a exclusão dos dados pessoais.
+            // Define o valor do parâmetro para deletar dados pessoais com base no CPF.
+            stmtPessoal.setString(1, dadoPessoalSelecionado.getCpf());
+            stmtPessoal.executeUpdate(); // Executa a exclusão dos dados pessoais.
 
-                // Recarrega os dados na interface após a exclusão.
-                carregarDadoPessoal();
-                carregarDadoProfissional();
+            // Recarrega os dados na interface após a exclusão.
+            carregarDadoPessoal();
+            carregarDadoProfissional();
 
-                // Exibe uma mensagem informando que a exclusão foi bem-sucedida.
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário excluído com sucesso!");   
-                }catch (SQLException e) {
-
-                // Caso ocorra erro na exclusão, exibe mensagem de erro ao usuário.
-                mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir funcionário: " + e.getMessage());
-                }
-        } else {
-            // Se nenhum funcionário estiver selecionado, exibe alerta para o usuário.
-            mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um funcionário para excluir!");
+            // Exibe uma mensagem informando que a exclusão foi bem-sucedida.
+            mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário excluído com sucesso!");
+        } catch (SQLException e) {
+            // Caso ocorra erro na exclusão, exibe mensagem de erro ao usuário.
+            mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir funcionário: " + e.getMessage());
         }
-        limparCamposAtualizacao(); // Após a exclusão, limpa os campos da aba de atualização.
+    } else {
+        // Se nenhum funcionário estiver selecionado, exibe alerta para o usuário.
+        mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um funcionário para excluir!");
+    }
+    limparCamposAtualizacao(); // Após a exclusão, limpa os campos da aba de atualização.
+}
+
+
+    public String formatarCPF(String cpf) {
+        // Remover caracteres não numéricos para garantir que tenhamos apenas os dígitos
+        cpf = cpf.replaceAll("[^0-9]", "");
+
+        // Verificar se o CPF tem 11 dígitos antes de formatar
+        if (cpf.length() == 11) {
+            return cpf.substring(0, 3) + "." +
+                   cpf.substring(3, 6) + "." +
+                   cpf.substring(6, 9) + "-" +
+                   cpf.substring(9, 11);
+        } else {
+            // Se o CPF não tiver 11 dígitos, retorna a string original ou uma mensagem de erro
+            return cpf; // Ou poderia retornar null ou lançar uma exceção informando o erro
+        }
     }
 
     // Método utilitário para exibir alertas na tela com diferentes tipos de mensagens.
