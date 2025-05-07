@@ -917,40 +917,37 @@ public void atualizarDadoProfissional() {
 
     @FXML
 public void excluirAtualizar() {
-    // Obtém o item selecionado na tabela de dados pessoais.
     DadoPessoal dadoPessoalSelecionado = tableDadoPessoal.getSelectionModel().getSelectedItem();
+    DadoProfissional dadoProfissionalSelecionado = tableDadoProfissional.getSelectionModel().getSelectedItem();
+    String excluirCpf = null; //ponte
 
-    // Verifica se um registro foi selecionado antes de excluir
     if (dadoPessoalSelecionado != null) {
+        excluirCpf  = dadoPessoalSelecionado.getCpf(); // cpf puxa a corrente dos dados pessoais
+    } else if (dadoProfissionalSelecionado != null) {
+        excluirCpf  = dadoProfissionalSelecionado.getDados_pessoais(); // chave puxa corrente dos dados profissionais
+    } else {
+        mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um funcionário para excluir!");
+        return; // Importante sair da função se nada estiver selecionado
+    }
+
+    if (excluirCpf  != null && !excluirCpf .isEmpty()) {
         try (Connection conn = Database.getConnection();
-             PreparedStatement stmtProfissional = conn.prepareStatement("DELETE FROM dadosprofissionais WHERE dados_pessoais = ?");
-             PreparedStatement stmtPessoal = conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?")) {
+             PreparedStatement stmt = conn.prepareStatement("DELETE FROM dadosprofissionais WHERE dados_pessoais = ?");
+             PreparedStatement stmt1= conn.prepareStatement("DELETE FROM dadospessoais WHERE cpf = ?")) {
 
-            // Define o valor do parâmetro para deletar dados profissionais com base no CPF vinculado.
-            stmtProfissional.setString(1, dadoPessoalSelecionado.getCpf());
-            stmtProfissional.executeUpdate(); // Executa a exclusão dos dados profissionais.
+            stmt.setString(1, excluirCpf );
+            stmt1.setString(1, excluirCpf );
 
-            // Define o valor do parâmetro para deletar dados pessoais com base no CPF.
-            stmtPessoal.setString(1, dadoPessoalSelecionado.getCpf());
-            stmtPessoal.executeUpdate(); // Executa a exclusão dos dados pessoais.
-
-            // Recarrega os dados na interface após a exclusão.
             carregarDadoPessoal();
             carregarDadoProfissional();
-
-            // Exibe uma mensagem informando que a exclusão foi bem-sucedida.
             mostrarAlerta(Alert.AlertType.INFORMATION, "Sucesso", "Funcionário excluído com sucesso!");
+
         } catch (SQLException e) {
-            // Caso ocorra erro na exclusão, exibe mensagem de erro ao usuário.
             mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Erro ao excluir funcionário: " + e.getMessage());
         }
-    } else {
-        // Se nenhum funcionário estiver selecionado, exibe alerta para o usuário.
-        mostrarAlerta(Alert.AlertType.WARNING, "Atenção", "Selecione um funcionário para excluir!");
     }
-    limparCamposAtualizacao(); // Após a exclusão, limpa os campos da aba de atualização.
+    limparCamposAtualizacao();
 }
-
 
     public String formatarCPF(String cpf) {
         // Remover caracteres não numéricos para garantir que tenhamos apenas os dígitos
@@ -977,40 +974,3 @@ public void excluirAtualizar() {
         alerta.showAndWait();; // Exibe o alerta e espera o usuário fechar.
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-   
-
-    
-
-
-
-
-   
-
-    
-
-        
-
-   
-
-    
-    
-
-   
-    
-
-        
-
-            
-    
-
