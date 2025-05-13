@@ -1,12 +1,14 @@
 package com.example.models;
 
+import java.time.LocalDate;
+
 public class DadoProfissional {
     private Integer idprof;
     private String cargo;
     private String departamento;
     private String funcao;
     private String maquinas;
-    private String admissao;
+    private LocalDate admissao;
     private String salario;
     private String dadosbancarios;
     private String beneficios;
@@ -20,7 +22,7 @@ public class DadoProfissional {
     private String nomeCompleto;
     private String dados_pessoais;
 
-    public DadoProfissional(Integer idprof,String nomeCompleto, String cargo, String departamento, String funcao,  String maquinas, String admissao, String salario, String dadosbancarios, String beneficios,
+    public DadoProfissional(Integer idprof,String nomeCompleto, String cargo, String departamento, String funcao,  String maquinas, LocalDate admissao, String salario, String dadosbancarios, String beneficios,
     String escolaridade, String ctps, String pisPasep, String contrato, String horario, String acidentes, String advertencias, String dados_pessoais) {
         this.idprof = idprof;
         this.nomeCompleto = nomeCompleto;
@@ -94,11 +96,11 @@ public void setMaquinas(String maquinas){
     this.maquinas = maquinas;
 }
 
-public String getAdmissao(){
+public LocalDate getAdmissao(){
     return admissao;
 }
-public void setAdmissao(String admissao){
-    this.admissao = admissao;
+public void setAdmissao(LocalDate admissao){
+    this.admissao = LocalDate.parse(admissao); // Converte String para LocalDate
 }
 
 public String getSalario() {
