@@ -90,6 +90,10 @@ public class ProdutoController {
 
             // Limpar campos
             limparCampos();
+
+            // Notifica o ProducaoController para recarregar a combobox de produtos
+            ProducaoController.getInstance().atualizarProdutos();
+
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível salvar/atualizar o produto.");
             AlertUtils.logError(e);

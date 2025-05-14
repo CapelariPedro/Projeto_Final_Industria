@@ -10,10 +10,12 @@ public class Funcionario {
     private final StringProperty nome = new SimpleStringProperty();
     private final StringProperty setor = new SimpleStringProperty();
 
-    // Construtor vazio
-    public Funcionario() {}
+    public Funcionario(int id, String nome) {
+        this.id.set(id);
+        this.nome.set(nome);
+        this.setor.set("");
+    }
 
-    // Construtor completo
     public Funcionario(int id, String nome, String setor) {
         this.id.set(id);
         this.nome.set(nome);

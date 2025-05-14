@@ -1,33 +1,34 @@
 CREATE DATABASE Industria_db;
 USE Industria_db;
 
-
 CREATE TABLE usuarioRH(
     id SERIAL PRIMARY KEY NOT NULL,
     usuario VARCHAR(100) NOT NULL,
     senha VARCHAR(100) NOT NULL
 );
 
-INSERT INTO usuarioRH(usuario, senha) VALUES ('julia', '123');
+INSERT INTO usuarioRH(usuario, senha) VALUES ('julia.rh', '2603');
+INSERT INTO usuarioRH(usuario, senha) VALUES ('fabiane.rh', '0728');
 
 CREATE TABLE `dadospessoais` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome_completo` VARCHAR(45) NOT NULL,
-  `data_nascimento` VARCHAR(15) NOT NULL,
+  `data_nascimento` DATE NOT NULL,
   `sexo` CHAR(20) NOT NULL,
-  `estado_civil` VARCHAR(15) NULL,
-  `conjuge` VARCHAR(45) NULL,
+  `estado_civil` VARCHAR(15) NOT NULL,
+  `conjugue` VARCHAR(45) NULL,
+  `data_conjugue` DATE NULL,
   `dependentes` VARCHAR(150) NULL,
-  `nacionalidade` VARCHAR(45) NULL,
-  `naturalidade` VARCHAR(45) NULL,
+  `nacionalidade` VARCHAR(45) NOT NULL,
+  `naturalidade` VARCHAR(45) NOT NULL,
   `cpf` VARCHAR(15) NOT NULL,
   `rg` VARCHAR(15) NOT NULL,
   `endereco` VARCHAR(45) NOT NULL,
   `telefone` VARCHAR(20) NOT NULL,
-  `email` VARCHAR(45) NULL,
-  `filiacao` VARCHAR(150) NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `filiacao` VARCHAR(150) NOT NULL,
   `tipo_sanguineo` VARCHAR(3) NOT NULL,
-  `contato_emergencia` VARCHAR(20) NULL,
+  `contato_emergencia` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`cpf`),
   UNIQUE INDEX `nome_completo_UNIQUE` (`id` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
@@ -41,17 +42,17 @@ CREATE TABLE `dadosprofissionais` (
   `departamento` VARCHAR(45) NOT NULL,
   `funcao` VARCHAR(150) NOT NULL,
   `maquinas` VARCHAR(45) NULL,
-  `admissao` VARCHAR(15) NOT NULL,
+  `admissao` DATE NOT NULL,
   `salario` VARCHAR(45) NOT NULL,
   `dadosbancarios` VARCHAR(45) NOT NULL,
   `beneficios` VARCHAR(45) NULL,
-  `escolaridade` VARCHAR(45) NULL,
+  `escolaridade` VARCHAR(45) NOT NULL,
   `ctps` VARCHAR(45) NOT NULL,
   `pisPasep` VARCHAR(45) NOT NULL,
   `contrato` VARCHAR(45) NOT NULL,
   `horario` VARCHAR(45) NOT NULL,
-  `acidentes` VARCHAR(200) NOT NULL,
-  `advertencias` VARCHAR(200) NOT NULL,
+  `acidentes` VARCHAR(200) NULL,
+  `advertencias` VARCHAR(200) NULL,
   `dados_pessoais` VARCHAR(15),
   
   FOREIGN KEY (dados_pessoais) REFERENCES dadospessoais(cpf),
@@ -70,14 +71,96 @@ DROP INDEX `dadosbancarios_UNIQUE` ,
 DROP INDEX `pisPasep_UNIQUE` ,
 DROP INDEX `ctps_UNIQUE` ;
 
-INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjuge, dependentes, nacionalidade, naturalidade, 
-cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia) 
-VALUES ('Fernanda Lima Oliveira', '14/03/1990', 'Feminino', 'Casado(a)', 'Ricardo Oliveira', 'Lucas Oliveira, Mariana Oliveira', 'Brasil', 'Curitiba-PR', 
-'321.654.987-00', '45.678.321', 'Rua das Palmeiras, 200 - Curitiba - PR', '(41) 99876-5432', 'fernanda.lima@email.com', 'Carlos Lima e Teresa Lima', 'A+', '(41) 99700-1122');
+-- Inserção de Dados Pessoais e Profissionais 1
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('João Silva', '12-04-1990', 'Masculino', 'Casado', 'Maria Silva', '10-12-2015', '2', 'Brasileiro', 'São Paulo', '12345678901', '123456789', 'Rua A, 123', '(11) 91234-5678', 'joao.silva@email.com', 'Carlos Silva, Ana Silva', 'O+', '(11) 98765-4321');
 
-INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias) 
-VALUES ('Analista Financeira Sênior', 'Financeiro', 'Controle orçamentário, relatórios e auditorias internas', 'Notebook, Calculadora financeira', '05/08/2021', '6700.00', 'Banco do Brasil - Ag. 1122 - C/C 556677-8', 
-'Plano de Saúde, Vale Alimentação', 'Graduação Completa(Bacharelado)', '554433', '98712365400', 'CLT', '08:00 às 17:00', '', 'Advertência verbal em 2022 por atraso');
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista de TI', 'Tecnologia', 'Desenvolvedor', 'Máquina A, Máquina B', '01-05-2015', 3500.00, 'Banco XYZ, Agência 123', 'Vale alimentação, Seguro saúde', 'Superior Completo', '1234567890', '12345678901', 'CLT', '08:00-17:00', 'Nenhum', 'Nenhuma', '12345678901');
+
+-- Inserção de Dados Pessoais e Profissionais 2
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Ana Souza', '22-06-1985', 'Feminino', 'Solteira', 'N/A', NULL, '1', 'Brasileira', 'Rio de Janeiro', '23456789012', '234567890', 'Avenida B, 456', '(21) 92345-6789', 'ana.souza@email.com', 'Luiz Souza, Maria Souza', 'A-', '(21) 99876-5432');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Gerente de Marketing', 'Marketing', 'Estratégia', 'Máquina C', '15-08-2010', 6000.00, 'Banco ABC, Agência 456', 'Vale refeição, Plano odontológico', 'Mestrado', '2345678901', '23456789012', 'PJ', '09:00-18:00', 'Nenhum', 'Nenhuma', '23456789012');
+
+-- Inserção de Dados Pessoais e Profissionais 3
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Carlos Pereira', '05-11-1982', 'Masculino', 'Divorciado', 'Ana Pereira', '18-06-2010', '3', 'Brasileiro', 'Belo Horizonte', '34567890123', '345678901', 'Rua C, 789', '(31) 93456-7890', 'carlos.pereira@email.com', 'João Pereira, Sandra Pereira', 'B+', '(31) 97654-3210');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Engenheiro de Produção', 'Produção', 'Coordenação', 'Máquina D, Máquina E', '10-12-2013', 8000.00, 'Banco DEF, Agência 789', 'Vale transporte, Plano de saúde', 'Doutorado', '3456789012', '34567890123', 'CLT', '07:30-16:30', 'Nenhum', 'Nenhuma', '34567890123');
+
+-- Inserção de Dados Pessoais e Profissionais 4
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Patrícia Lima', '01-02-1995', 'Feminino', 'Casada', 'Ricardo Lima', '22-04-2020', '0', 'Brasileira', 'Salvador', '45678901234', '456789012', 'Rua D, 101', '(71) 91234-5678', 'patricia.lima@email.com', 'Carlos Lima, Ana Lima', 'O-', '(71) 98765-4321');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Assistente Administrativo', 'Administração', 'Suporte', 'Máquina F', '01-01-2021', 2000.00, 'Banco GHI, Agência 101', 'Vale transporte, Seguro de vida', 'Técnico', '4567890123', '45678901234', 'CLT', '08:00-17:00', 'Nenhum', 'Nenhuma', '45678901234');
+
+-- Inserção de Dados Pessoais e Profissionais 5
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Ricardo Santos', '16-07-1990', 'Masculino', 'Solteiro', 'N/A', NULL, '0', 'Brasileiro', 'Curitiba', '56789012345', '567890123', 'Avenida E, 202', '(41) 92345-6789', 'ricardo.santos@email.com', 'Marcos Santos, Fernanda Santos', 'AB-', '(41) 97654-3210');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Consultor de Vendas', 'Vendas', 'Estratégia Comercial', 'Máquina G', '15-10-2018', 4500.00, 'Banco JKL, Agência 102', 'Vale alimentação, Bônus de performance', 'Superior Completo', '5678901234', '56789012345', 'PJ', '09:00-18:00', 'Nenhum', 'Nenhuma', '56789012345');
+
+-- Inserção de Dados Pessoais e Profissionais 6
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Fernanda Oliveira', '08-12-1993', 'Feminino', 'Casada', 'Carlos Oliveira', '30-08-2018', '1', 'Brasileira', 'Porto Alegre', '67890123456', '678901234', 'Rua F, 303', '(51) 93456-7890', 'fernanda.oliveira@email.com', 'Jorge Oliveira, Claudia Oliveira', 'O+', '(51) 99876-5432');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Coordenadora de RH', 'Recursos Humanos', 'Gestão de Pessoas', 'Máquina H', '01-06-2016', 5000.00, 'Banco MNO, Agência 104', 'Vale refeição, Seguro saúde', 'Pós-Graduação', '6789012345', '67890123456', 'CLT', '08:30-17:30', 'Nenhum', 'Nenhuma', '67890123456');
+
+-- Inserção de Dados Pessoais e Profissionais 7
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Márcio Costa', '18-09-1988', 'Masculino', 'Casado', 'Juliana Costa', '25-12-2013', '2', 'Brasileiro', 'Fortaleza', '78901234567', '789012345', 'Rua G, 404', '(85) 94567-8901', 'marcio.costa@email.com', 'José Costa, Maria Costa', 'B+', '(85) 91234-5678');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Supervisor de Produção', 'Produção', 'Coordenação', 'Máquina I', '10-11-2017', 7000.00, 'Banco PQR, Agência 105', 'Vale alimentação, Transporte corporativo', 'Superior Completo', '7890123456', '78901234567', 'CLT', '07:00-16:00', 'Nenhum', 'Nenhuma', '78901234567');
+
+-- Inserção de Dados Pessoais e Profissionais 8
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Luciana Mendes', '30-10-1991', 'Feminino', 'Solteira', 'N/A', NULL, '0', 'Brasileira', 'Vitória', '89012345678', '890123456', 'Rua H, 505', '(27) 93456-7891', 'luciana.mendes@email.com', 'Paulo Mendes, Carla Mendes', 'A+', '(27) 98765-4322');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Assistente de Marketing', 'Marketing', 'Criação de Conteúdo', 'Máquina J', '20-09-2019', 3000.00, 'Banco STU, Agência 106', 'Vale refeição, Bônus de performance', 'Superior Completo', '8901234567', '89012345678', 'PJ', '09:00-18:00', 'Nenhum', 'Nenhuma', '89012345678');
+
+-- Inserção de Dados Pessoais e Profissionais 9
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Eduardo Pereira', '03-05-1983', 'Masculino', 'Casado', 'Renata Pereira', '17-02-2011', '1', 'Brasileiro', 'Recife', '90123456789', '901234567', 'Rua I, 606', '(81) 91234-6789', 'eduardo.pereira@email.com', 'Luiz Pereira, Joana Pereira', 'O+', '(81) 98765-4321');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Supervisor de Logística', 'Logística', 'Gestão de Estoque', 'Máquina K', '15-04-2016', 6500.00, 'Banco VWX, Agência 107', 'Vale alimentação, Vale transporte', 'Superior Completo', '9012345678', '90123456789', 'CLT', '08:00-17:00', 'Nenhum', 'Nenhuma', '90123456789');
+
+-- Inserção de Dados Pessoais e Profissionais 10
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Camila Martins', '21-03-1992', 'Feminino', 'Solteira', 'N/A', NULL, '0', 'Brasileira', 'Curitiba', '01234567890', '012345678', 'Rua J, 707', '(41) 95432-6789', 'camila.martins@email.com', 'Roberto Martins, Silvia Martins', 'B-', '(41) 97654-3210');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Assistente de TI', 'Tecnologia', 'Suporte Técnico', 'Máquina L', '10-07-2018', 2800.00, 'Banco XYZ, Agência 108', 'Vale refeição, Plano de saúde', 'Técnico', '0123456789', '01234567890', 'CLT', '09:00-18:00', 'Nenhum', 'Nenhuma', '01234567890');
+
+-- Inserção de Dados Pessoais e Profissionais 11
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Felipe Costa', '10-01-1986', 'Masculino', 'Casado', 'Mariana Costa', '12-11-2012', '2', 'Brasileiro', 'Natal', '87934566610', '123456789', 'Avenida K, 808', '(84) 98765-4321', 'felipe.costa@email.com', 'Carlos Costa, Vera Costa', 'AB+', '(84) 91234-5678');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Coordenador de Vendas', 'Vendas', 'Gestão Comercial', 'Máquina M', '05-12-2014', 8500.00, 'Banco RST, Agência 109', 'Vale refeição, Vale transporte', 'Superior Completo', '12487890', '12345678901', 'CLT', '08:30-17:30', 'Nenhum', 'Nenhuma', '87934566610');
+
+-- Inserção de Dados Pessoais e Profissionais 12
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Juliana Rocha', '17-09-1989', 'Feminino', 'Solteira', 'N/A', NULL, '1', 'Brasileira', 'Belém', '87661366659', '234567890', 'Rua L, 909', '(91) 92345-6789', 'juliana.rocha@email.com', 'Adriana Rocha, Jorge Rocha', 'O+', '(91) 97654-3210');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Recepcionista', 'Administração', 'Atendimento ao Cliente', 'Máquina N', '01-08-2020', 1800.00, 'Banco UVW, Agência 110', 'Vale transporte, Seguro saúde', 'Ensino Médio Completo', '2345678901', '23456789012', 'CLT', '08:00-17:00', 'Nenhum', 'Nenhuma', '87661366659');
+
+-- Inserção de Dados Pessoais e Profissionais 13
+INSERT INTO dadospessoais (nome_completo, data_nascimento, sexo, estado_civil, conjugue, data_conjugue, dependentes, nacionalidade, naturalidade, cpf, rg, endereco, telefone, email, filiacao, tipo_sanguineo, contato_emergencia)
+VALUES ('Ricardo Almeida', '25-06-1987', 'Masculino', 'Casado', 'Larissa Almeida', '08-03-2014', '1', 'Brasileiro', 'Brasília', '54467389210', '345678901', 'Rua O, 1010', '(61) 91234-5678', 'ricardo.almeida@email.com', 'Eduardo Almeida, Paula Almeida', 'AB-', '(61) 98765-4321');
+
+INSERT INTO dadosprofissionais (cargo, departamento, funcao, maquinas, admissao, salario, dadosbancarios, beneficios, escolaridade, ctps, pisPasep, contrato, horario, acidentes, advertencias, dados_pessoais)
+VALUES ('Analista de Recursos Humanos', 'Recursos Humanos', 'Recrutamento e Seleção', 'Máquina O', '01-02-2016', 4000.00, 'Banco XYZ, Agência 111', 'Vale alimentação, Plano odontológico', 'Superior Completo', '3456789012', '34567890123', 'CLT', '09:00-18:00', 'Nenhum', 'Nenhuma', '54467389210');
 
 
 CREATE TABLE usuarioFinanceiro(
@@ -93,11 +176,17 @@ CREATE TABLE usuarioProducao(
     usuario VARCHAR(100) NOT NULL,
     senha VARCHAR(100) NOT NULL
 );
+INSERT INTO usuarioProducao(usuario, senha) 
+VALUES
+('matheus', '010123'),
+('vitor', '010123');
+    
 CREATE TABLE funcionario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     setor VARCHAR(50) NOT NULL
 );
+
 
 CREATE TABLE setores (
     id_setores int auto_increment primary key,
@@ -158,19 +247,40 @@ foreign key (fk_setor) references setores(id_setores));
 CREATE TABLE produto (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    preco DECIMAL(10,2) NOT NULL
+    lote VARCHAR(100) NOT NULL,
+    sku VARCHAR(100) NOT NULL
 );
+INSERT INTO produto (nome, lote, sku) VALUES
+('Painel de Controle', 'L202505-A', 'PNL-CTRL-001'),
+('Módulo de Reels', 'L202505-B', 'MOD-REELS-002'),
+('Display LCD 24"', 'L202505-C', 'DISP-24LCD-003'),
+('Placa de Circuito Principal', 'L202505-D', 'PLCCIRCUITO-004'),
+('Fonte de Alimentação 12V', 'L202505-E', 'FONTE-12V-005'),
+('Joystick para Máquinas', 'L202505-F', 'JOYSTICK-006'),
+('Sensor de Moeda', 'L202505-G', 'SENSOR-MOEDA-007'),
+('Motor de Reels', 'L202505-H', 'MOTOR-REELS-008'),
+('Teclado de Controle', 'L202505-I', 'TECLADO-CTRL-009'),
+('Botão de Início', 'L202505-J', 'BOTAO-START-010');
 
 CREATE TABLE producao (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    funcionario_id INT,
-    maquina_id INT,
-    produto_id INT,
+    funcionario VARCHAR(100),
+    maquina VARCHAR(100),
+    produto VARCHAR(100),
     quantidade INT NOT NULL,
-    data_producao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (funcionario_id) REFERENCES funcionario(id),
-    FOREIGN KEY (produto_id) REFERENCES produto(id)
+    data_producao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+INSERT INTO producao (funcionario, maquina, produto, quantidade, data_producao) VALUES
+('Matheus Nunes de Almeida', 'Serra de Corte Rápido', 'Painel de Controle', 10, '2024-03-15'),
+('Vitor Hugo Trindade', 'Furadeira de Bancada 13mm', 'Joystick para Máquinas', 9, '2025-02-12'),
+('Matheus Nunes de Almeida', 'Dobradeira de Chapas Manual', 'Módulo de Reels', 8, '2024-06-10'),
+('Vitor Hugo Trindade', 'Parafusadeira Bateria 18V', 'Sensor de Moeda', 11, '2024-08-05'),
+('Matheus Nunes de Almeida', 'Soldadora MIG 220V', 'Display LCD 24"', 6, '2024-11-01'),
+('Vitor Hugo Trindade', 'Retífica Elétrica', 'Motor de Reels', 7, '2024-10-18'),
+('Matheus Nunes de Almeida', 'Cabine de Pintura', 'Placa de Circuito Principal', 12, '2023-09-18'),
+('Vitor Hugo Trindade', 'Chave de Fenda Conjunto 6 peças', 'Teclado de Controle', 10, '2024-06-22'),
+('Matheus Nunes de Almeida', 'Compressor de Ar 200L', 'Fonte de Alimentação 12V', 14, '2024-10-10'),
+('Vitor Hugo Trindade', 'Chave Philips Conjunto 6 peças', 'Botão de Início', 13, '2024-06-22');
 
 CREATE TABLE usuarioEstoque(
     id SERIAL PRIMARY KEY NOT NULL,
@@ -338,9 +448,12 @@ CREATE TABLE usuarioMaquinario(
     senha VARCHAR(100) NOT NULL
 );
 
+INSERT INTO usuarioMaquinario(usuario, senha) VALUES ('fabiano ', '123');
+INSERT INTO usuarioMaquinario(usuario, senha) VALUES ('mauricio', '123');
 
 
--- Tabela de equipamentos
+
+-- Tabela de equipamentos com setor como ENUM para restrição
 CREATE TABLE equipamentos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     codigo VARCHAR(20) NOT NULL UNIQUE,
@@ -348,11 +461,12 @@ CREATE TABLE equipamentos (
     categoria VARCHAR(50),
     modelo VARCHAR(100),
     numero_serie VARCHAR(50),
-    setor VARCHAR(50),
+    setor ENUM('Acabamento','Almoxarifado', 'Automação', 'Controle de Qualidade', 'Financeiro', 'Manutenção', 'Produção', 'RH', 'Pintura', 'Montagem', 'Teste', 'Qualidade'),
     data_aquisicao DATE,
     valor_aquisicao DECIMAL(10,2),
     status VARCHAR(20) DEFAULT 'disponível',
-    manutencao_periodica BOOLEAN DEFAULT FALSE
+    manutencao_periodica BOOLEAN DEFAULT FALSE,
+    observacoes TEXT
 );
 
 -- Tabela de manutenções
@@ -367,11 +481,13 @@ CREATE TABLE manutencoes (
     FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
 );
 
--- Tabela de empréstimos
+-- Tabela de empréstimos modificada para incluir referência à pessoa
 CREATE TABLE emprestimos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     equipamento_id INT,
     setor_solicitante VARCHAR(50),
+    funcionario_cpf VARCHAR(15),
+    funcionario_nome VARCHAR(100),
     data_inicio DATE,
     data_devolucao DATE,
     status VARCHAR(20) DEFAULT 'no prazo',
@@ -530,3 +646,85 @@ INSERT INTO funcionario_setor (fk_funcionario, fk_setor) VALUES
 (10, 2),
 (11, 2),
 (12, 3);
+
+
+-- Caso o banco já exista, vamos usar o existente
+USE Industria_db;
+
+-- Tabela de equipamentos com setor como ENUM para restrição
+CREATE TABLE equipamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    nome VARCHAR(100) NOT NULL,
+    categoria VARCHAR(50),
+    modelo VARCHAR(100),
+    numero_serie VARCHAR(50),
+    setor ENUM('Acabamento','Almoxarifado', 'Automação', 'Controle de Qualidade', 'Financeiro', 'Manutenção', 'Produção', 'RH', 'Pintura', 'Montagem', 'Teste', 'Qualidade'),
+    data_aquisicao DATE,
+    valor_aquisicao DECIMAL(10,2),
+    status VARCHAR(20) DEFAULT 'disponível',
+    manutencao_periodica BOOLEAN DEFAULT FALSE,
+    observacoes TEXT
+);
+
+-- Tabela de manutenções
+CREATE TABLE manutencoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipamento_id INT,
+    tipo_manutencao VARCHAR(50),
+    data_inicio DATE,
+    data_conclusao DATE,
+    status VARCHAR(20),
+    descricao_servico TEXT,
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+);
+
+-- Tabela de empréstimos modificada para incluir referência à pessoa
+CREATE TABLE emprestimos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    equipamento_id INT,
+    setor_solicitante VARCHAR(50),
+    funcionario_cpf VARCHAR(15),
+    funcionario_nome VARCHAR(100),
+    data_inicio DATE,
+    data_devolucao DATE,
+    status VARCHAR(20) DEFAULT 'no prazo',
+    observacoes TEXT,
+    FOREIGN KEY (equipamento_id) REFERENCES equipamentos(id)
+);
+
+INSERT INTO equipamentos (
+    codigo, nome, categoria, modelo, numero_serie, setor, data_aquisicao, valor_aquisicao, status, manutencao_periodica
+) VALUES
+-- Corte e estrutura
+('EQP-M001', 'Serra de Corte Rápido', 'Ferramenta de Corte', 'SR-4500', 'SC-001-IND', 'Produção', '2024-03-15', 3500.00, 'disponível', TRUE),
+('EQP-M002', 'Dobradeira de Chapas Manual', 'Ferramenta de Conformação', 'DC-1000', 'DC-002-IND', 'Produção', '2024-06-10', 2800.00, 'disponível', TRUE),
+('EQP-M003', 'Soldadora MIG 220V', 'Solda', 'MIG220', 'SD-003-IND', 'Produção', '2024-11-01', 4200.00, 'disponível', TRUE),
+
+-- Pintura e acabamento
+('EQP-M004', 'Cabine de Pintura', 'Pintura Industrial', 'CB-500', 'PT-004-IND', 'Pintura', '2023-09-18', 7800.00, 'disponível', TRUE),
+('EQP-M005', 'Compressor de Ar 200L', 'Pneumático', 'CMP-200', 'AR-005-IND', 'Pintura', '2024-10-10', 3900.00, 'disponível', TRUE),
+
+-- Elétrica e eletrônica
+('EQP-M006', 'Estação de Solda Digital', 'Eletrônica', 'ESD-202', 'EL-006-IND', 'Montagem', '2025-01-22', 1100.00, 'disponível', TRUE),
+('EQP-M007', 'Fonte de Alimentação Ajustável', 'Eletrônica', 'FA-30V5A', 'FA-007-IND', 'Montagem', '2025-02-05', 750.00, 'disponível', FALSE),
+
+-- Montagem e testes
+('EQP-M008', 'Bancada de Montagem com Ferramentas', 'Montagem', 'BM-IND', 'BM-008-IND', 'Montagem', '2024-08-14', 2500.00, 'disponível', FALSE),
+('EQP-M009', 'Multímetro Digital True RMS', 'Instrumentação', 'MD-600', 'MT-009-IND', 'Qualidade', '2025-04-17', 450.00, 'disponível', FALSE),
+('EQP-M010', 'Osciloscópio de 2 Canais', 'Instrumentação', 'OSC-DS1102', 'OS-010-IND', 'Teste', '2024-05-30', 3200.00, 'disponível', FALSE),
+
+-- Ferramentas Elétricas Portáteis
+('EQP-F001', 'Furadeira de Bancada 13mm', 'Furadeira', 'FB-13', 'FD-001-PTL', 'Montagem', '2025-02-12', 850.00, 'disponível', TRUE),
+('EQP-F002', 'Parafusadeira Bateria 18V', 'Parafusadeira', 'PB-18', 'PS-002-PTL', 'Montagem', '2024-08-05', 680.00, 'disponível', FALSE),
+('EQP-F003', 'Retífica Elétrica', 'Acabamento', 'RE-100', 'RT-003-PTL', 'Acabamento', '2024-10-18', 430.00, 'disponível', FALSE),
+
+-- Ferramentas Manuais
+('EQP-F004', 'Chave de Fenda Conjunto 6 peças', 'Ferramenta Manual', 'CF-06', 'CF-004-MAN', 'Montagem', '2024-06-22', 120.00, 'disponível', FALSE),
+('EQP-F005', 'Chave Philips Conjunto 6 peças', 'Ferramenta Manual', 'CP-06', 'CP-005-MAN', 'Montagem', '2024-06-22', 130.00, 'disponível', FALSE),
+('EQP-F006', 'Martelo de Borracha 500g', 'Ferramenta Manual', 'MB-500', 'MT-006-MAN', 'Montagem', '2024-01-10', 60.00, 'disponível', FALSE),
+('EQP-F007', 'Alicate Universal 8"', 'Ferramenta Manual', 'AU-8', 'AL-007-MAN', 'Montagem', '2025-03-05', 55.00, 'disponível', FALSE),
+('EQP-F008', 'Alicate de Corte Diagonal', 'Ferramenta Manual', 'ACD-6', 'AC-008-MAN', 'Montagem', '2025-03-05', 58.00, 'disponível', FALSE),
+('EQP-F009', 'Trena 5 metros', 'Ferramenta de Medição', 'TR-5M', 'TR-009-MAN', 'Produção', '2024-12-01', 35.00, 'disponível', FALSE),
+('EQP-F010', 'Esquadro de Aço 12"', 'Ferramenta de Medição', 'ESQ-12', 'ES-010-MAN', 'Produção', '2024-12-01', 48.00, 'disponível', FALSE);
+

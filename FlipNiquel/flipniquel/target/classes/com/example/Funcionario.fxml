@@ -13,20 +13,18 @@
     </HBox>
     <Separator/>
     <GridPane hgap="15" vgap="10">
-        <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="txtFuncionarioNome"
-                   promptText="Digite o nome do funcionário"
-                   GridPane.columnIndex="0"
-                   GridPane.rowIndex="1"
-                   GridPane.hgrow="ALWAYS"/>
-        <Label text="Setor:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <ComboBox fx:id="cmbFuncionarioSetor"
-                  promptText="Selecione o setor"
+        <Label text="Funcionário:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="cmbFuncionario"
+                  promptText="Digite ou selecione o funcionário"
+                  GridPane.columnIndex="0"
+                  GridPane.rowIndex="1"
+                  GridPane.hgrow="ALWAYS"/>
+        <Label text="Função na Produção:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="cmbFuncao"
+                  promptText="Selecione a função"
                   GridPane.columnIndex="1"
                   GridPane.rowIndex="1"
-                  GridPane.hgrow="ALWAYS">
-            <!-- Setores serão populados dinamicamente no Controller -->
-        </ComboBox>
+                  GridPane.hgrow="ALWAYS"/>
     </GridPane>
     <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
         <Button text="Salvar"
@@ -45,12 +43,18 @@
             <TextField fx:id="filtroNome"
                        promptText="Busque por nome ou setor"
                        HBox.hgrow="ALWAYS"/>
+            <Button text="Filtrar" 
+                    onAction="#filtrarFuncionarios"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            <Button text="Limpar" 
+                    onAction="#limparFiltro"
+                    style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
         </HBox>
         <TableView fx:id="tableFuncionarios" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colFuncionarioId" text="ID" />
                 <TableColumn fx:id="colFuncionarioNome" text="Nome" />
-                <TableColumn fx:id="colFuncionarioSetor" text="Setor" />
+                <TableColumn fx:id="colFuncionarioSetor" text="Função" />
             </columns>
         </TableView>
         <HBox spacing="10" alignment="CENTER_RIGHT">

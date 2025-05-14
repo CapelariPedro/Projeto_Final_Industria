@@ -23,8 +23,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FuncionarioController {
 
-    @FXML private TextField txtFuncionarioNome;
-    @FXML private ComboBox<String> cmbFuncionarioSetor;
+    @FXML private ComboBox<Funcionario> cmbFuncionario;
+    @FXML private ComboBox<String> cmbFuncao;
     @FXML private TextField filtroNome;
     @FXML private TableView<Funcionario> tableFuncionarios;
     @FXML private TableColumn<Funcionario, Integer> colFuncionarioId;
@@ -32,27 +32,26 @@ public class FuncionarioController {
     @FXML private TableColumn<Funcionario, String> colFuncionarioSetor;
 
     private ObservableList<Funcionario> listaFuncionarios = FXCollections.observableArrayList();
-    
-    // Variáveis de controle de edição
     private boolean emEdicao = false;
     private Funcionario funcionarioEmEdicao = null;
 
     @FXML
     public void initialize() {
-        // Configurar combobox de setor
-        cmbFuncionarioSetor.setItems(FXCollections.observableArrayList(
-            "Produção", 
-            "Manutenção", 
-            "Logística", 
-            "Administrativo", 
-            "Recursos Humanos"
+        cmbFuncionario.setEditable(true);
+        configurarComboBoxFuncionario();
+
+        cmbFuncao.setItems(FXCollections.observableArrayList(
+            "Montador de Gabinetes",
+            "Eletricista Montador",
+            "Técnico em Eletrônica",
+            "Operador de CNC",
+            "Montador de Estruturas Metálicas"
+            
         ));
 
-        // Configurar colunas da tabela
         configurarColunas();
-
-        // Carregar funcionários
         carregarFuncionarios();
+        carregarFuncionariosTable();
     }
 
     private void configurarColunas() {
@@ -61,10 +60,30 @@ public class FuncionarioController {
         colFuncionarioSetor.setCellValueFactory(new PropertyValueFactory<>("setor"));
     }
 
+    private void configurarComboBoxFuncionario() {
+        cmbFuncionario.getEditor().textProperty().addListener((obs, oldVal, newVal) -> {
+            filtrarComboBox(cmbFuncionario, listaFuncionarios, newVal);
+        });
+    }
+
+    private void filtrarComboBox(ComboBox<Funcionario> comboBox, ObservableList<Funcionario> listaOriginal, String filtro) {
+        if (filtro == null || filtro.isEmpty()) {
+            comboBox.setItems(listaOriginal);
+            return;
+        }
+
+        ObservableList<Funcionario> listaFiltrada = listaOriginal.filtered(item -> 
+            item.getNome().toLowerCase().contains(filtro.toLowerCase())
+        );
+
+        comboBox.setItems(listaFiltrada);
+        comboBox.show();
+    }
+
     @FXML
     public void salvarFuncionario() {
-        String nome = txtFuncionarioNome.getText().trim();
-        String setor = cmbFuncionarioSetor.getValue();
+        String nome = cmbFuncionario.getEditor().getText().trim();
+        String setor = cmbFuncao.getValue(); 
 
         if (nome.isEmpty() || setor == null) {
             AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos.");
@@ -76,7 +95,7 @@ public class FuncionarioController {
             PreparedStatement stmt;
 
             if (emEdicao && funcionarioEmEdicao != null) {
-                // Lógica de ATUALIZAÇÃO
+                
                 sql = "UPDATE funcionario SET nome = ?, setor = ? WHERE id = ?";
                 stmt = conn.prepareStatement(sql);
                 stmt.setString(1, nome);
@@ -87,8 +106,9 @@ public class FuncionarioController {
                 if (linhasAfetadas > 0) {
                     AlertUtils.showAlert(AlertType.SUCESSO, "Sucesso", "Funcionário atualizado com sucesso!");
                 }
+
             } else {
-                // Lógica de INSERÇÃO
+               
                 sql = "INSERT INTO funcionario (nome, setor) VALUES (?, ?)";
                 stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, nome);
@@ -100,11 +120,13 @@ public class FuncionarioController {
                 }
             }
 
-            // Recarregar a lista de funcionários
+           
+            carregarFuncionariosTable();
             carregarFuncionarios();
-            
-            // Limpar campos
             limparCampos();
+
+            
+            ProducaoController.getInstance().atualizarFuncionarios();
 
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível salvar/atualizar o funcionário.");
@@ -114,21 +136,19 @@ public class FuncionarioController {
 
     @FXML
     public void editarFuncionario() {
-        // Recupera o funcionário selecionado na tabela
         Funcionario funcionarioSelecionado = tableFuncionarios.getSelectionModel().getSelectedItem();
         
         if (funcionarioSelecionado == null) {
             AlertUtils.showAlert(AlertType.AVISO, "Seleção Necessária", "Selecione um funcionário para editar.");
             return;
         }
-
-        // Preenche os campos com os dados do funcionário selecionado
-        txtFuncionarioNome.setText(funcionarioSelecionado.getNome());
-        cmbFuncionarioSetor.setValue(funcionarioSelecionado.getSetor());
-
-        // Configura modo de edição
-        this.emEdicao = true;
-        this.funcionarioEmEdicao = funcionarioSelecionado;
+        
+        cmbFuncionario.setValue(funcionarioSelecionado);
+        cmbFuncao.setValue(funcionarioSelecionado.getSetor());
+        
+        emEdicao = true;
+        funcionarioEmEdicao = funcionarioSelecionado;
+        carregarFuncionariosTable();
     }
 
     @FXML
@@ -141,19 +161,23 @@ public class FuncionarioController {
         }
 
         try (Connection conn = Database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("DELETE FROM funcionario WHERE id = ?")) {
-
+             PreparedStatement stmt = conn.prepareStatement(
+                 "DELETE FROM funcionario WHERE id = ?"
+             )) {
             stmt.setInt(1, funcionarioSelecionado.getId());
             int linhasAfetadas = stmt.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                AlertUtils.showAlert(AlertType.SUCESSO, "Funcionário Excluído", "Funcionário excluído com sucesso!");
+                AlertUtils.showAlert(AlertType.SUCESSO, "Funcionário Excluído", "Funcionário removido com sucesso!");
                 carregarFuncionarios();
+            } else {
+                AlertUtils.showAlert(AlertType.AVISO, "Erro na Exclusão", "Não foi possível excluir o funcionário.");
             }
         } catch (SQLException e) {
-            AlertUtils.showAlert(AlertType.ERRO, "Erro de Exclusão", "Não foi possível excluir o funcionário.");
+            AlertUtils.showAlert(AlertType.ERRO, "Erro de Exclusão", "Não foi possível remover o funcionário.");
             AlertUtils.logError(e);
         }
+        carregarFuncionariosTable();
     }
 
     @FXML
@@ -178,22 +202,51 @@ public class FuncionarioController {
         tableFuncionarios.setItems(listaFuncionarios);
     }
 
-    private void carregarFuncionarios() {
-        listaFuncionarios.clear();
-        
+    private void carregarFuncionariosTable() {
+        ObservableList<Funcionario> listaTabela = FXCollections.observableArrayList();
         try (Connection conn = Database.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM funcionario")) {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM funcionario")) {
 
             while (rs.next()) {
-                listaFuncionarios.add(new Funcionario(
+                Funcionario funcionario = new Funcionario(
                     rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getString("setor")
-                ));
+                );
+                listaTabela.add(funcionario);
             }
 
-            tableFuncionarios.setItems(listaFuncionarios);
+            tableFuncionarios.setItems(listaTabela);
+
+        } catch (SQLException e) {
+            AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar os funcionários.");
+            AlertUtils.logError(e);
+        }
+    }
+
+    private void carregarFuncionarios() {
+        listaFuncionarios.clear();
+        
+        String sql = "SELECT f.id_funcionarios, f.nome " +
+                     "FROM funcionarios f " +
+                     "INNER JOIN funcionario_setor fs ON f.id_funcionarios = fs.fk_funcionario " +
+                     "WHERE fs.fk_setor = 3";
+
+        try (Connection conn = Database.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Funcionario funcionario = new Funcionario(
+                    rs.getInt("id_funcionarios"),
+                    rs.getString("nome")
+                );
+                listaFuncionarios.add(funcionario);
+            }
+
+            cmbFuncionario.setItems(listaFuncionarios);
+
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar os funcionários.");
             AlertUtils.logError(e);
@@ -201,8 +254,9 @@ public class FuncionarioController {
     }
 
     private void limparCampos() {
-        txtFuncionarioNome.clear();
-        cmbFuncionarioSetor.setValue(null);
+        cmbFuncionario.setValue(null);
+        cmbFuncionario.getEditor().clear();
+        cmbFuncao.setValue(null);
         emEdicao = false;
         funcionarioEmEdicao = null;
     }

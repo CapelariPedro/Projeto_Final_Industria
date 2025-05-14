@@ -49,14 +49,23 @@ public class ProducaoController {
     private boolean emEdicao = false;
     private Producao producaoEmEdicao = null;
 
+    // Referência estática ao controlador de Produção
+    private static ProducaoController instance;
+
+    public ProducaoController() {
+        instance = this; // Define a instância estática ao criar o controller
+    }
+
     @FXML
     public void initialize() {
         configurarColunas();
-        configurarComboBoxEditaveis(); 
-        carregarFuncionarios();
+        configurarComboBoxEditaveis();
+        atualizarFuncionarios();
         carregarMaquinas();
-        carregarProdutos();
+        atualizarProdutos();
         carregarProducoes();
+        resetarCampos();
+        atualizarCampos();
     }
 
     private void configurarColunas() {
@@ -111,8 +120,7 @@ public class ProducaoController {
             while (rs.next()) {
                 listaFuncionarios.add(new Funcionario(
                     rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("setor")
+                    rs.getString("nome")
                 ));
             }
             cmbFuncionario.setItems(listaFuncionarios);
@@ -137,7 +145,6 @@ public class ProducaoController {
         }
     }
     
-
     private void carregarMaquinas() {
         listaMaquinas.clear();
         try (Connection conn = Database.getConnection();
@@ -152,7 +159,6 @@ public class ProducaoController {
                     rs.getString("categoria")
                 ));
             }
-    
             cmbMaquina.setItems(listaMaquinas);
     
             cmbMaquina.setConverter(new StringConverter<Maquina>() {
@@ -171,14 +177,12 @@ public class ProducaoController {
                     return null;
                 }
             });
-    
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar as máquinas.");
             AlertUtils.logError(e);
         }
     }
     
-
     private void carregarProdutos() {
         listaProdutos.clear();
         try (Connection conn = Database.getConnection();
@@ -193,9 +197,8 @@ public class ProducaoController {
                     rs.getString("sku")
                 ));
             }
-    
             cmbProduto.setItems(listaProdutos);
-    
+
             cmbProduto.setConverter(new StringConverter<Produto>() {
                 @Override
                 public String toString(Produto produto) {
@@ -212,34 +215,33 @@ public class ProducaoController {
                     return null;
                 }
             });
-    
         } catch (SQLException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Erro de Carregamento", "Não foi possível carregar os produtos.");
             AlertUtils.logError(e);
         }
     }
     
-
     @FXML
     public void registrarProducao() {
+        // Obtém os valores das comboboxes e do campo de texto
         Funcionario funcionario = cmbFuncionario.getValue();
         Maquina maquina = cmbMaquina.getValue();
         Produto produto = cmbProduto.getValue();
         String quantidadeTexto = txtQuantidade.getText().trim();
-    
+
         // Validação dos campos
         if (funcionario == null || maquina == null || produto == null || quantidadeTexto.isEmpty()) {
             AlertUtils.showAlert(AlertType.AVISO, "Campos Incompletos", "Preencha todos os campos obrigatórios.");
             return;
         }
-    
+
         try {
             int quantidade = Integer.parseInt(quantidadeTexto);
-    
+
             try (Connection conn = Database.getConnection()) {
                 String sql;
                 PreparedStatement stmt;
-    
+
                 if (emEdicao && producaoEmEdicao != null) {
                     // Atualizar produção existente
                     sql = "UPDATE producao SET funcionario = ?, maquina = ?, produto = ?, quantidade = ? WHERE id = ?";
@@ -249,14 +251,13 @@ public class ProducaoController {
                     stmt.setString(3, produto.getNome());
                     stmt.setInt(4, quantidade);
                     stmt.setInt(5, producaoEmEdicao.getId());
-    
+
                     int linhasAfetadas = stmt.executeUpdate();
                     if (linhasAfetadas > 0) {
                         AlertUtils.showAlert(AlertType.SUCESSO, "Produção Atualizada", "Produção atualizada com sucesso!");
                     } else {
                         AlertUtils.showAlert(AlertType.AVISO, "Nenhuma Alteração", "Nenhuma linha foi alterada.");
                     }
-    
                 } else {
                     // Inserir nova produção
                     sql = "INSERT INTO producao (funcionario, maquina, produto, quantidade, data_producao) VALUES (?, ?, ?, ?, ?)";
@@ -266,7 +267,7 @@ public class ProducaoController {
                     stmt.setString(3, produto.getNome());
                     stmt.setInt(4, quantidade);
                     stmt.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-    
+
                     int linhasAfetadas = stmt.executeUpdate();
                     if (linhasAfetadas > 0) {
                         AlertUtils.showAlert(AlertType.SUCESSO, "Produção Registrada", "Produção registrada com sucesso!");
@@ -274,24 +275,22 @@ public class ProducaoController {
                         AlertUtils.showAlert(AlertType.AVISO, "Falha", "Nenhuma produção foi registrada.");
                     }
                 }
-    
+                atualizarCampos();
                 carregarProducoes();
-                limparCampos();
+                resetarCampos();
                 emEdicao = false;
                 producaoEmEdicao = null;
-    
+
             } catch (SQLException e) {
                 AlertUtils.showAlert(AlertType.ERRO, "Erro de Banco", "Não foi possível registrar ou atualizar a produção.");
                 AlertUtils.logError(e);
             }
-    
+
         } catch (NumberFormatException e) {
             AlertUtils.showAlert(AlertType.ERRO, "Quantidade Inválida", "Digite uma quantidade válida (número inteiro).");
         }
     }
     
-
-
     @FXML
     public void editarProducao() {
         Producao producaoSelecionada = tableProducao.getSelectionModel().getSelectedItem();
@@ -302,21 +301,20 @@ public class ProducaoController {
         }
 
         Funcionario funcionarioSelecionado = listaFuncionarios.stream()
-        .filter(f -> f.getNome().equalsIgnoreCase(producaoSelecionada.getNomeFuncionario()))
-        .findFirst()
-        .orElse(null);
+            .filter(f -> f.getNome().equalsIgnoreCase(producaoSelecionada.getNomeFuncionario()))
+            .findFirst()
+            .orElse(null);
     
-    Maquina maquinaSelecionada = listaMaquinas.stream()
-        .filter(m -> m.getNome().equalsIgnoreCase(producaoSelecionada.getNomeMaquina()))
-        .findFirst()
-        .orElse(null);
-    
-    Produto produtoSelecionado = listaProdutos.stream()
-        .filter(p -> p.getNome().equalsIgnoreCase(producaoSelecionada.getNomeProduto()))
-        .findFirst()
-        .orElse(null);
-    
-
+        Maquina maquinaSelecionada = listaMaquinas.stream()
+            .filter(m -> m.getNome().equalsIgnoreCase(producaoSelecionada.getNomeMaquina()))
+            .findFirst()
+            .orElse(null);
+        
+        Produto produtoSelecionado = listaProdutos.stream()
+            .filter(p -> p.getNome().equalsIgnoreCase(producaoSelecionada.getNomeProduto()))
+            .findFirst()
+            .orElse(null);
+        
         cmbFuncionario.setValue(funcionarioSelecionado);
         cmbMaquina.setValue(maquinaSelecionada);
         cmbProduto.setValue(produtoSelecionado);
@@ -374,14 +372,10 @@ public class ProducaoController {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(
                  "SELECT p.id, p.quantidade, p.data_producao, " +
-                 "f.nome AS funcionario_nome, " +
-                 "m.nome AS maquina_nome, " +
-                 "pr.nome AS produto_nome " +
-                 "FROM producao p " +
-                 "JOIN funcionario f ON p.funcionario = f.nome " +
-                 "JOIN equipamentos m ON p.maquina = m.nome " +
-                 "JOIN produto pr ON p.produto = pr.nome"
-                 
+                 "p.funcionario AS funcionario_nome, " +
+                 "p.maquina AS maquina_nome, " +
+                 "p.produto AS produto_nome " +
+                 "FROM producao p"
              )) {
             while (rs.next()) {
                 listaProducao.add(new Producao(
@@ -399,14 +393,61 @@ public class ProducaoController {
             AlertUtils.logError(e);
         }
     }
-    
 
-    private void limparCampos() {
+    private void resetarCampos() {
+        
+        carregarFuncionarios();
+        carregarMaquinas();
+        carregarProdutos();
+        carregarProducoes();
+
+        
+        cmbFuncionario.setItems(listaFuncionarios);
         cmbFuncionario.setValue(null);
+        cmbFuncionario.getEditor().clear();
+
+        
+        cmbMaquina.setItems(listaMaquinas);
         cmbMaquina.setValue(null);
+        cmbMaquina.getEditor().clear();
+
+        
+        cmbProduto.setItems(listaProdutos);
         cmbProduto.setValue(null);
+        cmbProduto.getEditor().clear();
+
+        
         txtQuantidade.clear();
+
+        
+        filtroNome.clear();
+
+        
         emEdicao = false;
         producaoEmEdicao = null;
+    }
+
+    private void atualizarCampos() {
+        carregarFuncionarios();
+        carregarMaquinas();
+        carregarProdutos();
+        carregarProducoes();
+    }
+
+    
+    public static ProducaoController getInstance() {
+        return instance;
+    }
+
+    
+    public void atualizarFuncionarios() {
+        carregarFuncionarios();
+        cmbFuncionario.setItems(listaFuncionarios);
+    }
+
+    
+    public void atualizarProdutos() {
+        carregarProdutos();
+        cmbProduto.setItems(listaProdutos);
     }
 }

@@ -57,6 +57,9 @@
             <TextField fx:id="filtroNome"
                        promptText="Busque por funcionário, máquina ou produto"
                        HBox.hgrow="ALWAYS"/>
+            <Button text="Filtrar" 
+                    onAction="#filtrarProducoes"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
         </HBox>
         <TableView fx:id="tableProducao" VBox.vgrow="ALWAYS">
             <columns>

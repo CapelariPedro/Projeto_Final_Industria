@@ -179,35 +179,14 @@ CREATE TABLE usuarioProducao(
 INSERT INTO usuarioProducao(usuario, senha) 
 VALUES
 ('matheus', '010123'),
-('vitor', '010123')
+('vitor', '010123');
     
 CREATE TABLE funcionario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
     setor VARCHAR(50) NOT NULL
 );
-INSERT INTO funcionario(nome, setor) 
-VALUES
-('Ana Souza', 'Produção'),
-('Carlos Lima', 'Manutenção'),
-('João Silva', 'Logística'),
-('Maria Oliveira', 'Administrativo'),
-('Fernanda Costa', 'Recursos Humanos'),
-('Pedro Santos', 'Produção'),
-('Lucas Pereira', 'Manutenção'),
-('Juliana Almeida', 'Logística'),
-('Roberta Martins', 'Administrativo'),
-('Gabriel Rocha', 'Recursos Humanos'),
-('Patrícia Ferreira', 'Produção'),
-('Daniel Souza', 'Manutenção'),
-('Fernanda Lima', 'Logística'),
-('Rafael Oliveira', 'Administrativo'),
-('Tatiane Costa', 'Recursos Humanos'),
-('Renato Martins', 'Produção'),
-('Carla Pereira', 'Manutenção'),
-('Vinícius Santos', 'Logística'),
-('Letícia Almeida', 'Administrativo'),
-('Marcelo Rocha', 'Recursos Humanos'),
+
 
 CREATE TABLE setores (
     id_setores int auto_increment primary key,
@@ -271,28 +250,17 @@ CREATE TABLE produto (
     lote VARCHAR(100) NOT NULL,
     sku VARCHAR(100) NOT NULL
 );
-INSERT INTO produto(nome, lote, sku)
-VALUES
-('Fresadora CNC 5000', 'Lote001', 'SKU001'),
-('Torno Mecânico Precision 3000', 'Lote002', 'SKU002'),
-('Prensa Hidráulica Model 100', 'Lote003', 'SKU003'),
-('Serra de Fita Industrial X200', 'Lote004', 'SKU004'),
-('Moinho de Martelo Turbo', 'Lote005', 'SKU005'),
-('Compressor de Ar Industrial 150', 'Lote006', 'SKU006'),
-('Soldadora MIG 250', 'Lote007', 'SKU007'),
-('Bomba Centrífuga HeavyDuty', 'Lote008', 'SKU008'),
-('Escavadeira Hidráulica ProMax 400', 'Lote009', 'SKU009'),
-('Elevador de Carga ElectroLift', 'Lote010', 'SKU010'),
-('Injetora de Plástico Mod. 500', 'Lote011', 'SKU011'),
-('Cortadora Laser ProCut 200', 'Lote012', 'SKU012'),
-('Máquina de Corte a Plasma Xtreme', 'Lote013', 'SKU013'),
-('Furadeira Radial HeavyPro', 'Lote014', 'SKU014'),
-('Prensa Pneumática SpeedPress', 'Lote015', 'SKU015'),
-('Máquina de Solda TIG Master 200', 'Lote016', 'SKU016'),
-('Misturador de Ração AgroMix', 'Lote017', 'SKU017'),
-('Linha de Produção Modular MegaLine', 'Lote018', 'SKU018'),
-('Despolpadora Industrial FruitPro', 'Lote019', 'SKU019'),
-('Extrusora de Alumínio UltraPress', 'Lote020', 'SKU020'),
+INSERT INTO produto (nome, lote, sku) VALUES
+('Painel de Controle', 'L202505-A', 'PNL-CTRL-001'),
+('Módulo de Reels', 'L202505-B', 'MOD-REELS-002'),
+('Display LCD 24"', 'L202505-C', 'DISP-24LCD-003'),
+('Placa de Circuito Principal', 'L202505-D', 'PLCCIRCUITO-004'),
+('Fonte de Alimentação 12V', 'L202505-E', 'FONTE-12V-005'),
+('Joystick para Máquinas', 'L202505-F', 'JOYSTICK-006'),
+('Sensor de Moeda', 'L202505-G', 'SENSOR-MOEDA-007'),
+('Motor de Reels', 'L202505-H', 'MOTOR-REELS-008'),
+('Teclado de Controle', 'L202505-I', 'TECLADO-CTRL-009'),
+('Botão de Início', 'L202505-J', 'BOTAO-START-010');
 
 CREATE TABLE producao (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -300,12 +268,19 @@ CREATE TABLE producao (
     maquina VARCHAR(100),
     produto VARCHAR(100),
     quantidade INT NOT NULL,
-    data_producao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_producao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
-INSERT INTO producao (id, funcionario, maquina, produto, quantidade, data_producao) VALUES
-(1, 'Fernanda Costa', 'Soldadora MIG 220V', 'Moinho de Martelo Turbo', 20, '2025-05-07 09:27:29'),
-(3, 'João Silva', 'Soldadora MIG 220V', 'Prensa Hidráulica Model 100', 20, '2025-05-07 09:45:42'),
-(4, 'João Silva', 'Bancada de Montagem com Ferramentas', 'Serra de Fita Industrial X200', 80, '2025-05-07 10:05:12');
+INSERT INTO producao (funcionario, maquina, produto, quantidade, data_producao) VALUES
+('Matheus Nunes de Almeida', 'Serra de Corte Rápido', 'Painel de Controle', 10, '2024-03-15'),
+('Vitor Hugo Trindade', 'Furadeira de Bancada 13mm', 'Joystick para Máquinas', 9, '2025-02-12'),
+('Matheus Nunes de Almeida', 'Dobradeira de Chapas Manual', 'Módulo de Reels', 8, '2024-06-10'),
+('Vitor Hugo Trindade', 'Parafusadeira Bateria 18V', 'Sensor de Moeda', 11, '2024-08-05'),
+('Matheus Nunes de Almeida', 'Soldadora MIG 220V', 'Display LCD 24"', 6, '2024-11-01'),
+('Vitor Hugo Trindade', 'Retífica Elétrica', 'Motor de Reels', 7, '2024-10-18'),
+('Matheus Nunes de Almeida', 'Cabine de Pintura', 'Placa de Circuito Principal', 12, '2023-09-18'),
+('Vitor Hugo Trindade', 'Chave de Fenda Conjunto 6 peças', 'Teclado de Controle', 10, '2024-06-22'),
+('Matheus Nunes de Almeida', 'Compressor de Ar 200L', 'Fonte de Alimentação 12V', 14, '2024-10-10'),
+('Vitor Hugo Trindade', 'Chave Philips Conjunto 6 peças', 'Botão de Início', 13, '2024-06-22');
 
 CREATE TABLE usuarioEstoque(
     id SERIAL PRIMARY KEY NOT NULL,
